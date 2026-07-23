@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#b9895f">
+  <title>تقييم الخدمة | كليجاتشينو - فرع النخيل</title>
+  <style>
+    :root{
+      --brand:#b9895f;
+      --brand-dark:#755039;
+      --cream:#fbf7f2;
+      --text:#231f20;
+      --muted:#6e625c;
+      --yes:#258c57;
+      --no:#c84b45;
+      --wa:#25D366;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      min-height:100vh;
+      font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Tahoma,Arial,sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(circle at top right, rgba(185,137,95,.18), transparent 34%),
+        linear-gradient(160deg,#fff,var(--cream));
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:18px;
+    }
+    .wrap{width:100%;max-width:500px}
+    .card{
+      background:#fff;
+      border:1px solid rgba(117,80,57,.10);
+      border-radius:26px;
+      box-shadow:0 18px 55px rgba(80,53,38,.14);
+      padding:25px 20px 22px;
+      text-align:center;
+      overflow:hidden;
+      animation:show .22s ease;
+    }
+    @keyframes show{from{opacity:0;transform:translateY(7px)}to{opacity:1;transform:none}}
+    .brand-image{
+      width:100%;
+      max-height:210px;
+      object-fit:contain;
+      border-radius:18px;
+      margin-bottom:13px;
+      background:#fff;
+    }
+    .icon{
+      width:78px;height:78px;border-radius:50%;
+      display:grid;place-items:center;margin:0 auto 17px;
+      font-size:37px;font-weight:900;color:#fff;background:var(--brand)
+    }
+    h1{font-size:26px;margin:4px 0 12px;line-height:1.45}
+    p{font-size:18px;line-height:1.8;color:var(--muted);margin:0 0 22px}
+    .buttons{display:grid;gap:12px}
+    button,.btn{
+      display:block;width:100%;border:0;border-radius:15px;
+      padding:15px 17px;font-size:18px;font-weight:800;
+      cursor:pointer;text-decoration:none;
+      transition:transform .12s ease,opacity .12s ease;
+    }
+    button:active,.btn:active{transform:scale(.985)}
+    .yes{background:var(--yes);color:#fff}
+    .no{background:var(--no);color:#fff}
+    .google{background:var(--brand-dark);color:#fff}
+    .whatsapp{background:var(--wa);color:#fff}
+    .back{margin-top:12px;background:#efe7e1;color:var(--brand-dark)}
+    .note{font-size:13px;color:#9a8e88;margin-top:16px}
+    .hidden{display:none}
+  </style>
+</head>
+<body>
+  <main class="wrap">
+
+    <section class="card" id="questionPage">
+      <img class="brand-image" src="logo.png" alt="كليجاتشينو فرع النخيل">
+      <h1>هل أنت راضٍ عن الخدمة المقدمة؟</h1>
+      <div class="buttons">
+        <button class="yes" >نعم</button>
+        <button class="no" >لا</button>
+      </div>
+      <div class="note">كليجاتشينو-فرع النخيل</div>
+    </section>
+
+    <section class="card hidden" id="yesPage">
+      <div class="icon">✓</div>
+      <h1>شكراً لك</h1>
+      <p>يسعدنا تقييمك على جوجل</p>
+      <a class="btn google"
+         href="https://maps.app.goo.gl/82ZtKJEtk7FzqqvP7?g_st=ic"
+         target="_blank" rel="noopener noreferrer">قيّمنا</a>
+      <button class="back" onclick="showPage('questionPage')">رجوع</button>
+    </section>
+
+    <section class="card hidden" id="noPage">
+      <div class="icon">!</div>
+      <h1>يؤسفنا سماع ذلك</h1>
+      <p>نرجو التواصل معنا</p>
+      <a class="btn whatsapp"
+         href="https://wa.me/966545554873?text=%D8%A7%D9%84%D8%B3%D9%84%D8%A7%D9%85%20%D8%B9%D9%84%D9%8A%D9%83%D9%85%D8%8C%20%D9%84%D8%AF%D9%8A%20%D9%85%D9%84%D8%A7%D8%AD%D8%B8%D8%A9%20%D8%B9%D9%84%D9%89%20%D8%A7%D9%84%D8%AE%D8%AF%D9%85%D8%A9%20%D9%81%D9%8A%20%D9%81%D8%B1%D8%B9%20%D8%A7%D9%84%D8%A8%D9%88%D8%A7%D8%AF%D9%8A" 
+         target="_blank" rel="noopener noreferrer">تواصل معنا</a>
+      <button class="back" onclick="showPage('questionPage')">رجوع</button>
+    </section>
+
+  </main>
+
+  <script>
+    function showPage(id){
+      document.querySelectorAll('.card').forEach(el => el.classList.add('hidden'));
+      document.getElementById(id).classList.remove('hidden');
+      window.scrollTo({top:0,behavior:'smooth'});
+    }
+  
+    const WEB_APP_URL="https://script.google.com/macros/s/AKfycbz2Lrqyk4wkEhxE1cOq9OQbmGeTknutUilFbVrlj2L3KdFAUAw823r9hPRr7ItebFE3Rw/exec ";
+    async function sendRating(rating){
+      try{
+        await fetch(WEB_APP_URL,{
+          method:"POST",
+          mode:"no-cors",
+          headers:{"Content-Type":"application/json"},
+          body:JSON.stringify({
+            rating:rating,
+            timestamp:new Date().toISOString(),
+            browser:navigator.userAgent,
+            device:/Mobi|Android|iPhone|iPad/i.test(navigator.userAgent)?"Mobile":"Desktop"
+          })
+        });
+      }catch(e){}
+    }
+   document.querySelector(".yes").addEventListener("click", () => {
+    showPage("yesPage");
+    sendRating("Yes");
+});
+
+document.querySelector(".no").addEventListener("click", () => {
+    showPage("noPage");
+    sendRating("No");
+}); 
+</script>
+</body>
+</html>
