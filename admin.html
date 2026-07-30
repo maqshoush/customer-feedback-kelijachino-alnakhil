@@ -20,10 +20,13 @@ font-family:Arial,Tahoma,sans-serif;
 body{
 
 margin:0;
-min-height:100vh;
+
+height:100vh;
 
 display:flex;
+
 justify-content:center;
+
 align-items:center;
 
 background:#f7f7f7;
@@ -31,10 +34,12 @@ background:#f7f7f7;
 }
 
 
+
 .login-box{
 
 width:90%;
-max-width:420px;
+
+max-width:400px;
 
 background:white;
 
@@ -49,6 +54,7 @@ text-align:center;
 }
 
 
+
 h2{
 
 margin-bottom:30px;
@@ -56,6 +62,7 @@ margin-bottom:30px;
 color:#222;
 
 }
+
 
 
 input{
@@ -82,7 +89,7 @@ width:100%;
 
 padding:14px;
 
-border:0;
+border:none;
 
 border-radius:10px;
 
@@ -95,6 +102,7 @@ font-size:16px;
 cursor:pointer;
 
 }
+
 
 
 button:hover{
@@ -111,8 +119,6 @@ margin-top:15px;
 
 color:red;
 
-display:none;
-
 }
 
 
@@ -120,7 +126,6 @@ display:none;
 </style>
 
 </head>
-
 
 
 <body>
@@ -132,6 +137,7 @@ display:none;
 <h2>
 لوحة الإدارة
 </h2>
+
 
 
 <input id="username" type="text" placeholder="اسم المستخدم">
@@ -152,13 +158,7 @@ display:none;
 
 
 
-
 <script>
-
-
-const scriptURL = 
-"https://script.google.com/macros/s/AKfycbxbnrzn9Wr9bw7Wwx_1orSMU-r_he6PkfR0sne79blA63DDHirYcMSdgznHc6c-av0vqw/exec";
-
 
 
 function login(){
@@ -173,7 +173,19 @@ document.getElementById("password").value;
 
 
 
-fetch(scriptURL,{
+if(username=="" || password==""){
+
+document.getElementById("message").innerHTML =
+"أدخل البيانات كاملة";
+
+return;
+
+}
+
+
+
+fetch("https://script.google.com/macros/s/AKfycbxbnrzn9Wr9bw7Wwx_1orSMU-r_he6PkfR0sne79blA63DDHirYcMSdgznHc6c-av0vqw/exec",
+{
 
 method:"POST",
 
@@ -187,9 +199,7 @@ password:password
 
 })
 
-
 .then(response=>response.json())
-
 
 .then(data=>{
 
@@ -205,38 +215,30 @@ window.location.href="dashboard.html";
 else{
 
 
-let msg=document.getElementById("message");
-
-msg.style.display="block";
-
-msg.innerHTML=data.message;
+document.getElementById("message").innerHTML =
+data.message;
 
 
 }
 
 
-
 })
-
 
 .catch(()=>{
 
 
-let msg=document.getElementById("message");
-
-msg.style.display="block";
-
-msg.innerHTML="حدث خطأ في الاتصال";
+document.getElementById("message").innerHTML =
+"حدث خطأ في الاتصال";
 
 
 });
-
 
 
 }
 
 
 </script>
+
 
 
 </body>
