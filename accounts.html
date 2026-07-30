@@ -367,9 +367,76 @@ username:user
 
 function addAccount(){
 
-alert("سنضيف نافذة إضافة الحساب في التحديث القادم");
+
+let name = prompt("الاسم");
+
+let username = prompt("اسم المستخدم");
+
+let password = prompt("كلمة المرور");
+
+let email = prompt("البريد الإلكتروني");
+
+let phone = prompt("رقم الجوال");
+
+let role = prompt("الصلاحية (مدير النظام / موظف / مشاهد)");
+
+
+
+if(!name || !username || !password){
+
+alert("أكمل البيانات الأساسية");
+
+return;
 
 }
+
+
+
+fetch(API,{
+
+method:"POST",
+
+body:JSON.stringify({
+
+action:"add",
+
+account:{
+
+name:name,
+
+username:username,
+
+password:password,
+
+email:email,
+
+phone:phone,
+
+role:role
+
+}
+
+}
+
+)
+
+})
+
+
+.then(r=>r.json())
+
+.then(result=>{
+
+alert(result.message);
+
+load();
+
+});
+
+
+}
+
+
 
 
 
