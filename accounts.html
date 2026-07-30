@@ -6,14 +6,14 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>الحسابات</title>
+<title>إدارة الحسابات</title>
 
 
 <style>
 
 *{
 box-sizing:border-box;
-font-family:Arial,Tahoma,sans-serif;
+font-family:Arial,Tahoma;
 }
 
 
@@ -26,11 +26,9 @@ padding:25px;
 }
 
 
-
 h1{
 
 text-align:center;
-color:#222;
 
 }
 
@@ -40,7 +38,7 @@ color:#222;
 
 background:white;
 
-max-width:900px;
+max-width:1100px;
 
 margin:30px auto;
 
@@ -48,9 +46,44 @@ padding:20px;
 
 border-radius:20px;
 
-box-shadow:0 5px 20px rgba(0,0,0,.1);
+box-shadow:0 5px 20px #0002;
 
 overflow:auto;
+
+}
+
+
+
+button{
+
+padding:10px 15px;
+
+border:0;
+
+border-radius:8px;
+
+background:#222;
+
+color:white;
+
+cursor:pointer;
+
+margin:5px;
+
+}
+
+
+.add{
+
+background:green;
+
+}
+
+
+
+.delete{
+
+background:red;
 
 }
 
@@ -72,7 +105,7 @@ background:#222;
 
 color:white;
 
-padding:15px;
+padding:12px;
 
 }
 
@@ -80,7 +113,7 @@ padding:15px;
 
 td{
 
-padding:15px;
+padding:12px;
 
 border-bottom:1px solid #ddd;
 
@@ -90,7 +123,7 @@ text-align:center;
 
 
 
-.status{
+.active{
 
 color:green;
 
@@ -99,34 +132,14 @@ font-weight:bold;
 }
 
 
+.off{
 
-button{
+color:red;
 
-padding:10px 20px;
-
-border:none;
-
-border-radius:8px;
-
-background:#222;
-
-color:white;
-
-cursor:pointer;
+font-weight:bold;
 
 }
 
-
-
-.back{
-
-display:block;
-
-margin:20px auto;
-
-width:200px;
-
-}
 
 
 </style>
@@ -142,6 +155,15 @@ width:200px;
 </h1>
 
 
+<div style="text-align:center">
+
+<button class="add" onclick="addAccount()">
++ إضافة حساب
+</button>
+
+</div>
+
+
 
 <div class="box">
 
@@ -149,21 +171,25 @@ width:200px;
 <table>
 
 
+<thead>
+
 <tr>
 
 <th>الاسم</th>
-<th>اسم المستخدم</th>
+<th>المستخدم</th>
 <th>الصلاحية</th>
 <th>الحالة</th>
 <th>آخر دخول</th>
+<th>الإجراءات</th>
 
 </tr>
 
+</thead>
 
-<tbody id="accounts">
+
+<tbody id="table">
 
 </tbody>
-
 
 
 </table>
@@ -173,8 +199,7 @@ width:200px;
 
 
 
-
-<button class="back" onclick="back()">
+<button onclick="back()">
 
 العودة للوحة الإدارة
 
@@ -182,15 +207,17 @@ width:200px;
 
 
 
-
 <script>
 
 
-const scriptURL = "https://script.google.com/macros/s/AKfycbxbnrzn9Wr9bw7Wwx_1orSMU-r_he6PkfR0sne79blA63DDHirYcMSdgznHc6c-av0vqw/exec";
+const API="https://script.google.com/macros/s/AKfycbxbnrzn9Wr9bw7Wwx_1orSMU-r_he6PkfR0sne79blA63DDHirYcMSdgznHc6c-av0vqw/exec";
 
 
 
-fetch(scriptURL,{
+function load(){
+
+
+fetch(API,{
 
 method:"POST",
 
@@ -202,9 +229,7 @@ action:"accounts"
 
 })
 
-
-.then(response=>response.json())
-
+.then(r=>r.json())
 
 .then(data=>{
 
@@ -212,22 +237,49 @@ action:"accounts"
 let html="";
 
 
-data.forEach(account=>{
+data.forEach(a=>{
 
 
-html += `
+html+=`
 
 <tr>
 
-<td>${account.name}</td>
+<td>${a.name}</td>
 
-<td>${account.username}</td>
+<td>${a.username}</td>
 
-<td>${account.role}</td>
+<td>${a.role}</td>
 
-<td class="status">${account.status}</td>
 
-<td>${account.lastLogin ? new Date(account.lastLogin).toLocaleString("ar-SA") : "-"}</td>
+<td class="${a.status=="فعال"?"active":"off"}">
+
+${a.status}
+
+</td>
+
+
+<td>${a.last || "-"}</td>
+
+
+<td>
+
+
+<button onclick="toggle('${a.username}')">
+
+تفعيل/تعطيل
+
+</button>
+
+
+<button class="delete" onclick="del('${a.username}')">
+
+حذف
+
+</button>
+
+
+</td>
+
 
 </tr>
 
@@ -235,33 +287,102 @@ html += `
 `;
 
 
+
 });
 
 
-document.getElementById("accounts").innerHTML = html;
+document.getElementById("table").innerHTML=html;
 
+
+
+});
+
+
+}
+
+
+
+
+
+function toggle(user){
+
+
+if(confirm("هل أنت متأكد من تغيير حالة الحساب؟")){
+
+
+fetch(API,{
+
+method:"POST",
+
+body:JSON.stringify({
+
+action:"toggle",
+
+username:user
 
 })
 
+})
+.then(()=>load());
 
 
-.catch(error=>{
+}
 
-document.getElementById("accounts").innerHTML =
 
-"<tr><td colspan='5'>حدث خطأ في جلب البيانات</td></tr>";
+}
 
-});
 
+
+
+
+function del(user){
+
+
+if(confirm("⚠️ هل أنت متأكد من حذف الحساب؟ لا يمكن التراجع عن هذا الإجراء")){
+
+
+fetch(API,{
+
+method:"POST",
+
+body:JSON.stringify({
+
+action:"delete",
+
+username:user
+
+})
+
+})
+.then(()=>load());
+
+
+}
+
+
+}
+
+
+
+
+function addAccount(){
+
+alert("سنضيف نافذة إضافة الحساب في التحديث القادم");
+
+}
 
 
 
 
 function back(){
 
-window.location.href="dashboard.html";
+location.href="dashboard.html";
 
 }
+
+
+
+load();
 
 
 </script>
