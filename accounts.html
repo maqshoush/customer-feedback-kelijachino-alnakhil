@@ -27,9 +27,7 @@ padding:25px;
 
 
 h1{
-
 text-align:center;
-
 }
 
 
@@ -37,17 +35,11 @@ text-align:center;
 .box{
 
 background:white;
-
 max-width:1100px;
-
 margin:30px auto;
-
 padding:20px;
-
 border-radius:20px;
-
 box-shadow:0 5px 20px #0002;
-
 overflow:auto;
 
 }
@@ -57,20 +49,15 @@ overflow:auto;
 button{
 
 padding:10px 15px;
-
 border:0;
-
 border-radius:8px;
-
 background:#222;
-
 color:white;
-
 cursor:pointer;
-
 margin:5px;
 
 }
+
 
 
 .add{
@@ -92,7 +79,6 @@ background:red;
 table{
 
 width:100%;
-
 border-collapse:collapse;
 
 }
@@ -102,9 +88,7 @@ border-collapse:collapse;
 th{
 
 background:#222;
-
 color:white;
-
 padding:12px;
 
 }
@@ -114,9 +98,7 @@ padding:12px;
 td{
 
 padding:12px;
-
 border-bottom:1px solid #ddd;
-
 text-align:center;
 
 }
@@ -126,17 +108,89 @@ text-align:center;
 .active{
 
 color:green;
-
 font-weight:bold;
 
 }
 
 
+
 .off{
 
 color:red;
-
 font-weight:bold;
+
+}
+
+
+/* نافذة الإضافة */
+
+
+.modal{
+
+display:none;
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:#0008;
+align-items:center;
+justify-content:center;
+
+}
+
+
+
+.modal-box{
+
+background:white;
+width:90%;
+max-width:450px;
+padding:25px;
+border-radius:20px;
+text-align:center;
+
+}
+
+
+
+.modal input,
+.modal select{
+
+width:100%;
+padding:12px;
+margin:8px 0;
+border-radius:10px;
+border:1px solid #ccc;
+
+}
+
+
+
+.error{
+
+color:red;
+font-size:14px;
+
+}
+
+
+
+.shake{
+
+animation:shake .3s;
+
+}
+
+
+
+@keyframes shake{
+
+25%{transform:translateX(10px)}
+
+50%{transform:translateX(-10px)}
+
+75%{transform:translateX(10px)}
 
 }
 
@@ -155,10 +209,13 @@ font-weight:bold;
 </h1>
 
 
+
 <div style="text-align:center">
 
 <button class="add" onclick="addAccount()">
+
 + إضافة حساب
+
 </button>
 
 </div>
@@ -199,6 +256,7 @@ font-weight:bold;
 
 
 
+
 <button onclick="back()">
 
 العودة للوحة الإدارة
@@ -207,10 +265,86 @@ font-weight:bold;
 
 
 
+
+
+<!-- نافذة إضافة الحساب -->
+
+
+<div id="modal" class="modal">
+
+
+<div id="modalBox" class="modal-box">
+
+
+<h2>
+إضافة حساب جديد
+</h2>
+
+
+<input id="name" placeholder="الاسم">
+
+
+<input id="username" placeholder="اسم المستخدم">
+
+
+<div id="userError" class="error"></div>
+
+
+
+<input id="password" type="password" placeholder="كلمة المرور">
+
+
+<div id="passError" class="error"></div>
+
+
+
+<input id="email" placeholder="البريد">
+
+
+<input id="phone" placeholder="رقم الجوال">
+
+
+
+<select id="role">
+
+<option>مدير النظام</option>
+<option>موظف</option>
+<option>مشاهد</option>
+
+</select>
+
+
+
+<button class="add" onclick="saveAccount()">
+
+حفظ
+
+</button>
+
+
+<button onclick="closeBox()">
+
+إلغاء
+
+</button>
+
+
+
+</div>
+
+</div>
+
+
+
+
+
+
 <script>
 
 
 const API="https://script.google.com/macros/s/AKfycbxbnrzn9Wr9bw7Wwx_1orSMU-r_he6PkfR0sne79blA63DDHirYcMSdgznHc6c-av0vqw/exec";
+
+
 
 
 
@@ -287,12 +421,10 @@ ${a.status}
 `;
 
 
-
 });
 
 
 document.getElementById("table").innerHTML=html;
-
 
 
 });
@@ -304,10 +436,136 @@ document.getElementById("table").innerHTML=html;
 
 
 
+
+function addAccount(){
+
+document.getElementById("modal").style.display="flex";
+
+}
+
+
+
+
+function closeBox(){
+
+document.getElementById("modal").style.display="none";
+
+}
+
+
+
+
+
+
+function saveAccount(){
+
+
+let box=document.getElementById("modalBox");
+
+
+let account={
+
+
+name:name.value,
+
+username:username.value,
+
+password:password.value,
+
+email:email.value,
+
+phone:phone.value,
+
+role:role.value
+
+
+};
+
+
+
+userError.innerHTML="";
+
+passError.innerHTML="";
+
+
+
+fetch(API,{
+
+method:"POST",
+
+body:JSON.stringify({
+
+action:"add",
+
+account:account
+
+})
+
+})
+
+
+.then(r=>r.json())
+
+
+.then(res=>{
+
+
+if(!res.success){
+
+
+box.classList.remove("shake");
+
+void box.offsetWidth;
+
+box.classList.add("shake");
+
+
+
+if(res.message.includes("المستخدم")){
+
+userError.innerHTML=res.message;
+
+}
+
+
+if(res.message.includes("كلمة")){
+
+passError.innerHTML=res.message;
+
+}
+
+
+return;
+
+}
+
+
+
+
+alert(res.message);
+
+closeBox();
+
+load();
+
+
+
+});
+
+
+
+}
+
+
+
+
+
+
+
 function toggle(user){
 
 
-if(confirm("هل أنت متأكد من تغيير حالة الحساب؟")){
+if(confirm("هل تريد تغيير حالة الحساب؟")){
 
 
 fetch(API,{
@@ -323,11 +581,11 @@ username:user
 })
 
 })
+
 .then(()=>load());
 
 
 }
-
 
 }
 
@@ -338,7 +596,7 @@ username:user
 function del(user){
 
 
-if(confirm("⚠️ هل أنت متأكد من حذف الحساب؟ لا يمكن التراجع عن هذا الإجراء")){
+if(confirm("⚠️ هل أنت متأكد من حذف الحساب؟")){
 
 
 fetch(API,{
@@ -354,84 +612,11 @@ username:user
 })
 
 })
+
 .then(()=>load());
 
 
 }
-
-
-}
-
-
-
-
-function addAccount(){
-
-
-let name = prompt("الاسم");
-
-let username = prompt("اسم المستخدم");
-
-let password = prompt("كلمة المرور");
-
-let email = prompt("البريد الإلكتروني");
-
-let phone = prompt("رقم الجوال");
-
-let role = prompt("الصلاحية (مدير النظام / موظف / مشاهد)");
-
-
-
-if(!name || !username || !password){
-
-alert("أكمل البيانات الأساسية");
-
-return;
-
-}
-
-
-
-fetch(API,{
-
-method:"POST",
-
-body:JSON.stringify({
-
-action:"add",
-
-account:{
-
-name:name,
-
-username:username,
-
-password:password,
-
-email:email,
-
-phone:phone,
-
-role:role
-
-}
-
-}
-
-)
-
-})
-
-
-.then(r=>r.json())
-
-.then(result=>{
-
-alert(result.message);
-
-load();
-
-});
 
 
 }
@@ -452,8 +637,8 @@ location.href="dashboard.html";
 load();
 
 
-</script>
 
+</script>
 
 
 </body>
