@@ -8,6 +8,7 @@
 
 <title>الحسابات</title>
 
+
 <style>
 
 *{
@@ -15,63 +16,118 @@ box-sizing:border-box;
 font-family:Arial,Tahoma,sans-serif;
 }
 
+
 body{
+
 margin:0;
 background:#f5f5f5;
 padding:25px;
+
 }
+
+
 
 h1{
+
 text-align:center;
 color:#222;
+
 }
+
+
 
 .box{
+
 background:white;
+
 max-width:900px;
+
 margin:30px auto;
+
 padding:20px;
+
 border-radius:20px;
+
 box-shadow:0 5px 20px rgba(0,0,0,.1);
+
 overflow:auto;
+
 }
+
+
 
 table{
+
 width:100%;
+
 border-collapse:collapse;
+
 }
+
+
 
 th{
+
 background:#222;
+
 color:white;
+
 padding:15px;
+
 }
+
+
 
 td{
+
 padding:15px;
+
 border-bottom:1px solid #ddd;
+
 text-align:center;
+
 }
+
+
 
 .status{
+
 color:green;
+
 font-weight:bold;
+
 }
+
+
 
 button{
+
 padding:10px 20px;
+
 border:none;
+
 border-radius:8px;
+
 background:#222;
+
 color:white;
+
 cursor:pointer;
+
 }
 
+
+
 .back{
+
 display:block;
+
 margin:20px auto;
+
 width:200px;
+
 }
+
 
 </style>
 
@@ -86,9 +142,12 @@ width:200px;
 </h1>
 
 
+
 <div class="box">
 
-<table id="accounts">
+
+<table>
+
 
 <tr>
 
@@ -101,38 +160,62 @@ width:200px;
 </tr>
 
 
+<tbody id="accounts">
+
+</tbody>
+
+
+
 </table>
 
 
 </div>
 
 
+
+
 <button class="back" onclick="back()">
+
 العودة للوحة الإدارة
+
 </button>
+
 
 
 
 <script>
 
 
-var url="https://script.google.com/macros/s/AKfycbxbnrzn9Wr9bw7Wwx_1orSMU-r_he6PkfR0sne79blA63DDHirYcMSdgznHc6c-av0vqw/exec";
+const scriptURL = "https://script.google.com/macros/s/AKfycbxbnrzn9Wr9bw7Wwx_1orSMU-r_he6PkfR0sne79blA63DDHirYcMSdgznHc6c-av0vqw/exec";
 
 
-fetch(url)
+
+fetch(scriptURL,{
+
+method:"POST",
+
+body:JSON.stringify({
+
+action:"accounts"
+
+})
+
+})
+
 
 .then(response=>response.json())
+
 
 .then(data=>{
 
 
-let table=document.getElementById("accounts");
+let html="";
 
 
 data.forEach(account=>{
 
 
-let row=`
+html += `
 
 <tr>
 
@@ -144,20 +227,34 @@ let row=`
 
 <td class="status">${account.status}</td>
 
-<td>${account.lastLogin || "-"}</td>
+<td>${account.lastLogin ? new Date(account.lastLogin).toLocaleString("ar-SA") : "-"}</td>
 
 </tr>
+
 
 `;
 
 
-table.innerHTML += row;
+});
 
+
+document.getElementById("accounts").innerHTML = html;
+
+
+})
+
+
+
+.catch(error=>{
+
+document.getElementById("accounts").innerHTML =
+
+"<tr><td colspan='5'>حدث خطأ في جلب البيانات</td></tr>";
 
 });
 
 
-});
+
 
 
 function back(){
@@ -168,6 +265,7 @@ window.location.href="dashboard.html";
 
 
 </script>
+
 
 
 </body>
