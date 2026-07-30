@@ -8,7 +8,6 @@
 
 <title>الحسابات</title>
 
-
 <style>
 
 *{
@@ -89,30 +88,23 @@ width:200px;
 
 <div class="box">
 
-<table>
-
-<thead>
+<table id="accounts">
 
 <tr>
+
 <th>الاسم</th>
 <th>اسم المستخدم</th>
 <th>الصلاحية</th>
 <th>الحالة</th>
 <th>آخر دخول</th>
+
 </tr>
-
-</thead>
-
-
-<tbody id="accounts">
-
-</tbody>
 
 
 </table>
 
-</div>
 
+</div>
 
 
 <button class="back" onclick="back()">
@@ -121,62 +113,51 @@ width:200px;
 
 
 
-
 <script>
 
 
-var scriptURL="https://script.google.com/macros/s/AKfycbxbnrzn9Wr9bw7Wwx_1orSMU-r_he6PkfR0sne79blA63DDHirYcMSdgznHc6c-av0vqw/exec"
+var url="https://script.google.com/macros/s/AKfycbxbnrzn9Wr9bw7Wwx_1orSMU-r_he6PkfR0sne79blA63DDHirYcMSdgznHc6c-av0vqw/exec";
 
 
-fetch(scriptURL,{
-method:"POST",
-body:JSON.stringify({
-action:"accounts"
-})
-})
+fetch(url)
 
-
-.then(res=>res.json())
+.then(response=>response.json())
 
 .then(data=>{
 
 
-let html="";
+let table=document.getElementById("accounts");
 
 
-data.forEach(row=>{
+data.forEach(account=>{
 
 
-html+=`
+let row=`
 
 <tr>
 
-<td>${row[0]}</td>
+<td>${account.name}</td>
 
-<td>${row[1]}</td>
+<td>${account.username}</td>
 
-<td>${row[5]}</td>
+<td>${account.role}</td>
 
-<td class="status">${row[6]}</td>
+<td class="status">${account.status}</td>
 
-<td>${row[7] || "-"}</td>
-
+<td>${account.lastLogin || "-"}</td>
 
 </tr>
 
 `;
 
 
-});
-
-
-document.getElementById("accounts").innerHTML=html;
+table.innerHTML += row;
 
 
 });
 
 
-
+});
 
 
 function back(){
