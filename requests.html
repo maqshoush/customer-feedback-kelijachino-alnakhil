@@ -10,15 +10,10 @@
 
 <style>
 
-*{
-box-sizing:border-box;
-font-family:Arial,Tahoma;
-}
-
 body{
-margin:0;
+font-family:Arial;
 background:#f5f5f5;
-padding:25px;
+padding:20px;
 }
 
 h1{
@@ -27,11 +22,8 @@ text-align:center;
 
 .box{
 background:white;
-max-width:1000px;
-margin:30px auto;
 padding:20px;
 border-radius:20px;
-box-shadow:0 5px 20px #0002;
 overflow:auto;
 }
 
@@ -53,7 +45,7 @@ text-align:center;
 }
 
 button{
-padding:8px 12px;
+padding:8px;
 border:0;
 border-radius:8px;
 cursor:pointer;
@@ -67,15 +59,6 @@ color:white;
 .reject{
 background:red;
 color:white;
-}
-
-.back{
-display:block;
-margin:30px auto;
-background:#222;
-color:white;
-width:200px;
-padding:12px;
 }
 
 </style>
@@ -120,36 +103,20 @@ padding:12px;
 
 
 
-<button class="back" onclick="back()">
-العودة للوحة الإدارة
-</button>
-
-
-
-
 <script>
 
 
-const URL =
-"https://script.google.com/macros/s/AKfycbxbnrzn9Wr9bw7Wwx_1orSMU-r_he6PkfR0sne79blA63DDHirYcMSdgznHc6c-av0vqw/exec";
+const URL="https://script.google.com/macros/s/AKfycbxbnrzn9Wr9bw7Wwx_1orSMU-r_he6PkfR0sne79blA63DDHirYcMSdgznHc6c-av0vqw/exec";
 
 
 
-function loadRequests(){
-
-
-fetch(URL,
-{
-
+fetch(URL,{
 method:"POST",
-
 body:JSON.stringify({
-
 action:"requests"
-
+})
 })
 
-})
 
 .then(r=>r.json())
 
@@ -161,13 +128,7 @@ let html="";
 
 if(data.length==0){
 
-html=`
-<tr>
-<td colspan="6">
-لا توجد طلبات
-</td>
-</tr>
-`;
+html="<tr><td colspan='6'>لا توجد طلبات</td></tr>";
 
 }
 
@@ -189,25 +150,25 @@ html+=`
 
 <td>${r.status}</td>
 
+
 <td>
 
-<button class="accept"
-onclick="approve(${r.row})">
+<button class="accept" onclick="approve(${r.row})">
 قبول
 </button>
 
 
-<button class="reject"
-onclick="reject(${r.row})">
+<button class="reject" onclick="reject(${r.row})">
 رفض
 </button>
 
 </td>
 
+
 </tr>
 
-`;
 
+`;
 
 });
 
@@ -218,81 +179,39 @@ document.getElementById("list").innerHTML=html;
 });
 
 
-}
 
 
 
 
 function approve(row){
 
-
-fetch(URL,
-{
-
+fetch(URL,{
 method:"POST",
-
 body:JSON.stringify({
-
 action:"approve",
-
 row:row
-
 })
-
 })
-
-.then(()=>{
-
-loadRequests();
-
-});
-
+.then(()=>location.reload());
 
 }
-
 
 
 
 
 function reject(row){
 
-
-fetch(URL,
-{
-
+fetch(URL,{
 method:"POST",
-
 body:JSON.stringify({
-
 action:"reject",
-
 row:row
-
 })
-
 })
-
-.then(()=>{
-
-loadRequests();
-
-});
-
+.then(()=>location.reload());
 
 }
 
-
-
-
-
-function back(){
-
-window.location.href="dashboard.html";
-
-}
-
-
-loadRequests();
 
 
 </script>
