@@ -10,143 +10,64 @@
 
 <style>
 
-*{
-box-sizing:border-box;
-font-family:Arial,Tahoma,sans-serif;
-}
-
 body{
-margin:0;
+font-family:Arial;
 background:#f5f5f5;
-padding:25px;
+padding:20px;
 }
-
 
 h1{
 text-align:center;
 }
 
-
 .box{
-
 background:white;
-max-width:1200px;
-margin:30px auto;
 padding:20px;
 border-radius:20px;
-box-shadow:0 5px 20px #0002;
 overflow:auto;
-
 }
-
-
-button{
-
-padding:10px 15px;
-border:0;
-border-radius:8px;
-background:#222;
-color:white;
-cursor:pointer;
-margin:5px;
-
-}
-
-
-.add{
-background:green;
-}
-
-
-.delete{
-background:red;
-}
-
 
 table{
-
 width:100%;
 border-collapse:collapse;
-min-width:1000px;
-
 }
 
-
 th{
-
 background:#222;
 color:white;
 padding:12px;
-
 }
 
-
 td{
-
 padding:12px;
 border-bottom:1px solid #ddd;
 text-align:center;
-
 }
 
-
-.active{
-
-color:green;
-font-weight:bold;
-
-}
-
-
-.off{
-
-color:red;
-font-weight:bold;
-
-}
-
-
-input,select{
-
-width:100%;
-padding:12px;
-margin:7px 0;
+button{
+padding:8px 12px;
+border:0;
 border-radius:8px;
-border:1px solid #ddd;
-
+cursor:pointer;
 }
 
-
-/* نافذة الإضافة */
-
-#addBox{
-
-display:none;
-position:fixed;
-top:0;
-left:0;
-width:100%;
-height:100%;
-background:#0008;
-z-index:999;
-
+.delete{
+background:red;
+color:white;
 }
 
-
-.modal{
-
-background:white;
-width:90%;
-max-width:450px;
-margin:50px auto;
-padding:25px;
-border-radius:20px;
-
+.toggle{
+background:green;
+color:white;
 }
 
+.back{
+margin-top:20px;
+background:#222;
+color:white;
+}
 
 </style>
-
 
 </head>
 
@@ -159,170 +80,54 @@ border-radius:20px;
 </h1>
 
 
-
-<div style="text-align:center">
-
-<button class="add" onclick="addAccount()">
-
-+ إضافة حساب
-
-</button>
-
-</div>
-
-
-
-
 <div class="box">
 
-
 <table>
-
 
 <thead>
 
 <tr>
-
 <th>الاسم</th>
 <th>اسم المستخدم</th>
-<th>تاريخ الإنشاء</th>
 <th>البريد</th>
 <th>الجوال</th>
 <th>الصلاحية</th>
 <th>الحالة</th>
-<th>آخر دخول</th>
-<th>الإجراءات</th>
-
-
+<th>الإجراء</th>
 </tr>
-
 
 </thead>
 
 
+<tbody id="table">
 
-<tbody id="table"></tbody>
+</tbody>
 
 
 </table>
 
-
 </div>
 
 
 
-
-<button onclick="back()">
-
+<button class="back" onclick="back()">
 العودة للوحة الإدارة
-
 </button>
-
-
-
-
-
-<!-- نافذة إضافة حساب -->
-
-
-<div id="addBox">
-
-
-<div class="modal">
-
-
-<h2 style="text-align:center">
-
-إضافة حساب جديد
-
-</h2>
-
-
-
-<input id="name" placeholder="الاسم">
-
-
-<input id="newUser" placeholder="اسم المستخدم">
-
-
-<input id="newPass" type="password" placeholder="كلمة المرور">
-
-
-<input id="email" placeholder="البريد">
-
-
-<input id="phone" placeholder="رقم الجوال">
-
-
-
-<select id="role">
-
-<option value="موظف">
-موظف
-</option>
-
-
-<option value="مدير النظام">
-مدير النظام
-</option>
-
-
-</select>
-
-
-
-<button style="background:green" onclick="saveAccount()">
-
-حفظ
-
-</button>
-
-
-
-<button style="background:red" onclick="closeAdd()">
-
-إلغاء
-
-</button>
-
-
-
-<div id="addMsg"></div>
-
-
-</div>
-
-
-</div>
-
-
-
 
 
 
 <script>
 
 
-
-const API="https://script.google.com/macros/s/AKfycbxbnrzn9Wr9bw7Wwx_1orSMU-r_he6PkfR0sne79blA63DDHirYcMSdgznHc6c-av0vqw/exec";
-
+const URL="https://script.google.com/macros/s/AKfycbxbnrzn9Wr9bw7Wwx_1orSMU-r_he6PkfR0sne79blA63DDHirYcMSdgznHc6c-av0vqw/exec";
 
 
 
-
-function load(){
-
-
-fetch(API,{
-
+fetch(URL,{
 method:"POST",
-
 body:JSON.stringify({
-
 action:"accounts"
-
 })
-
 })
 
 
@@ -342,44 +147,28 @@ html+=`
 
 <tr>
 
-<td>${a.name || "-"}</td>
+<td>${a.name}</td>
 
-<td>${a.username || "-"}</td>
+<td>${a.username}</td>
 
-<td>${a.created || "-"}</td>
+<td>${a.email}</td>
 
-<td>${a.email || "-"}</td>
+<td>${a.phone}</td>
 
-<td>${a.phone || "-"}</td>
+<td>${a.role}</td>
 
-<td>${a.role || "-"}</td>
-
-
-<td class="${a.status=="فعال"?"active":"off"}">
-
-${a.status || "-"}
-
-</td>
-
-
-<td>${a.last || "-"}</td>
-
+<td>${a.status}</td>
 
 
 <td>
 
-
-<button onclick="toggle('${a.username}')">
-
+<button class="toggle" onclick="toggle('${a.username}')">
 تفعيل/تعطيل
-
 </button>
 
 
 <button class="delete" onclick="del('${a.username}')">
-
 حذف
-
 </button>
 
 
@@ -387,7 +176,6 @@ ${a.status || "-"}
 
 
 </tr>
-
 
 `;
 
@@ -401,169 +189,40 @@ document.getElementById("table").innerHTML=html;
 });
 
 
-}
-
-
-
-
-
-
-function addAccount(){
-
-document.getElementById("addBox").style.display="block";
-
-}
-
-
-
-
-
-function closeAdd(){
-
-document.getElementById("addBox").style.display="none";
-
-}
-
-
-
-
-
-function saveAccount(){
-
-
-
-let data={
-
-
-action:"addAccount",
-
-name:document.getElementById("name").value,
-
-username:document.getElementById("newUser").value,
-
-password:document.getElementById("newPass").value,
-
-email:document.getElementById("email").value,
-
-phone:document.getElementById("phone").value,
-
-role:document.getElementById("role").value
-
-
-};
-
-
-
-fetch(API,{
-
-method:"POST",
-
-body:JSON.stringify(data)
-
-})
-
-
-.then(r=>r.json())
-
-
-.then(res=>{
-
-
-if(res.success){
-
-
-alert("تم إنشاء الحساب بنجاح");
-
-
-location.reload();
-
-
-}
-
-else{
-
-
-document.getElementById("addMsg").innerHTML=
-
-"<p style='color:red'>"+res.message+"</p>";
-
-
-}
-
-
-});
-
-
-}
-
-
-
-
 
 
 function toggle(user){
 
-
-if(confirm("هل أنت متأكد من تغيير حالة الحساب؟")){
-
-
-fetch(API,{
-
+fetch(URL,{
 method:"POST",
-
 body:JSON.stringify({
-
 action:"toggle",
-
 username:user
-
 })
-
 })
-
-.then(()=>load());
-
+.then(()=>location.reload());
 
 }
-
-
-}
-
-
-
 
 
 
 
 function del(user){
 
+if(confirm("حذف الحساب؟")){
 
-if(confirm("⚠️ هل أنت متأكد من حذف الحساب؟")){
-
-
-fetch(API,{
-
+fetch(URL,{
 method:"POST",
-
 body:JSON.stringify({
-
 action:"delete",
-
 username:user
-
 })
-
 })
-
-.then(()=>load());
-
+.then(()=>location.reload());
 
 }
 
-
 }
-
-
 
 
 
@@ -575,14 +234,7 @@ location.href="dashboard.html";
 }
 
 
-
-
-load();
-
-
-
 </script>
-
 
 
 </body>
