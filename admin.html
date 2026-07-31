@@ -222,10 +222,16 @@ password:password
 
 if(data.success){
 
-
-if(data.role=="مدير النظام"){
+if(
+data.role=="مدير النظام" ||
+data.role=="إدارة" ||
+data.role=="ادارة"
+){
 
 window.location.href="dashboard.html";
+
+}
+
 
 }
 
