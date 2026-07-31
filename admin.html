@@ -219,28 +219,24 @@ password:password
 
 
 
-
 .then(data=>{
 
 if(data.success){
 
-if(data.role=="مدير النظام"){
+    if(data.role=="مدير النظام"){
 
-window.location.href =
-"https://maqshoush.github.io/customer-feedback-kelijachino-alnakhil/dashboard.html";
+        window.location.href =
+        "https://maqshoush.github.io/customer-feedback-kelijachino-alnakhil/dashboard.html";
 
-}
+    }
+    else if(data.role=="موظف"){
 
-else if(data.role=="موظف"){
+        window.location.href =
+        "https://script.google.com/macros/s/AKfycbxWIzQoHaQA0RtQiXrL6N0xjcXEE0StIxTrvdsSiGqkvBBYkeX07-ve58jeACZXTdgk_A/exec";
 
-window.location.href =
-"https://script.google.com/macros/s/AKfycbxWIzQoHaQA0RtQiXrL6N0xjcXEE0StIxTrvdsSiGqkvBBYkeX07-ve58jeACZXTdgk_A/exec";
+    }
 
-}
-
-}
-
-else{
+}else{
 
 document.getElementById("message").innerHTML=data.message;
 
