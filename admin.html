@@ -216,21 +216,21 @@ password:password
 
 .then(response=>response.json())
 
+
 .then(data=>{
 
 
+if(data.success){
 
-if(res.success){
 
-
-if(res.role=="إدارة"){
+if(data.role=="إدارة"){
 
 window.location.href="dashboard.html";
 
 }
 
 
-else if(res.role=="موظف"){
+else if(data.role=="موظف"){
 
 window.location.href="employee.html";
 
@@ -238,9 +238,6 @@ window.location.href="employee.html";
 
 
 }
-
-
-
 
 
 else{
@@ -254,6 +251,30 @@ data.message;
 
 
 })
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 .catch(()=>{
 
