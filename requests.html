@@ -12,7 +12,7 @@
 
 *{
 box-sizing:border-box;
-font-family:Arial,Tahoma,sans-serif;
+font-family:Arial,Tahoma;
 }
 
 body{
@@ -23,79 +23,59 @@ padding:25px;
 
 h1{
 text-align:center;
-color:#222;
 }
 
 .box{
-
 background:white;
 max-width:1000px;
 margin:30px auto;
 padding:20px;
 border-radius:20px;
-box-shadow:0 5px 20px rgba(0,0,0,.1);
+box-shadow:0 5px 20px #0002;
 overflow:auto;
-
 }
 
 table{
-
 width:100%;
 border-collapse:collapse;
-
 }
 
 th{
-
 background:#222;
 color:white;
-padding:15px;
-
+padding:12px;
 }
 
 td{
-
-padding:15px;
+padding:12px;
 border-bottom:1px solid #ddd;
 text-align:center;
-
 }
-
 
 button{
-
-padding:8px 15px;
-border:none;
+padding:8px 12px;
+border:0;
 border-radius:8px;
 cursor:pointer;
-
 }
-
 
 .accept{
-
 background:green;
 color:white;
-
 }
-
 
 .reject{
-
 background:red;
 color:white;
-
 }
 
-
 .back{
-
 display:block;
 margin:30px auto;
-width:200px;
 background:#222;
 color:white;
-
+width:200px;
+padding:12px;
 }
 
 </style>
@@ -111,66 +91,209 @@ color:white;
 </h1>
 
 
-
 <div class="box">
 
 <table>
 
+<thead>
 
 <tr>
-
 <th>الاسم</th>
 <th>اسم المستخدم</th>
 <th>البريد</th>
-<th>رقم الجوال</th>
+<th>الجوال</th>
 <th>الحالة</th>
 <th>الإجراء</th>
-
 </tr>
 
+</thead>
 
 
-<tr>
+<tbody id="list">
 
-<td>لا توجد طلبات</td>
-
-<td>-</td>
-
-<td>-</td>
-
-<td>-</td>
-
-<td>انتظار</td>
-
-<td>-</td>
-
-
-</tr>
+</tbody>
 
 
 </table>
-
 
 </div>
 
 
 
-
 <button class="back" onclick="back()">
-
 العودة للوحة الإدارة
-
 </button>
 
 
 
+
 <script>
+
+
+const URL =
+"https://script.google.com/macros/s/AKfycbxbnrzn9Wr9bw7Wwx_1orSMU-r_he6PkfR0sne79blA63DDHirYcMSdgznHc6c-av0vqw/exec";
+
+
+
+function loadRequests(){
+
+
+fetch(URL,
+{
+
+method:"POST",
+
+body:JSON.stringify({
+
+action:"requests"
+
+})
+
+})
+
+.then(r=>r.json())
+
+.then(data=>{
+
+
+let html="";
+
+
+if(data.length==0){
+
+html=`
+<tr>
+<td colspan="6">
+لا توجد طلبات
+</td>
+</tr>
+`;
+
+}
+
+
+data.forEach(r=>{
+
+
+html+=`
+
+<tr>
+
+<td>${r.name}</td>
+
+<td>${r.username}</td>
+
+<td>${r.email}</td>
+
+<td>${r.phone}</td>
+
+<td>${r.status}</td>
+
+<td>
+
+<button class="accept"
+onclick="approve(${r.row})">
+قبول
+</button>
+
+
+<button class="reject"
+onclick="reject(${r.row})">
+رفض
+</button>
+
+</td>
+
+</tr>
+
+`;
+
+
+});
+
+
+document.getElementById("list").innerHTML=html;
+
+
+});
+
+
+}
+
+
+
+
+function approve(row){
+
+
+fetch(URL,
+{
+
+method:"POST",
+
+body:JSON.stringify({
+
+action:"approve",
+
+row:row
+
+})
+
+})
+
+.then(()=>{
+
+loadRequests();
+
+});
+
+
+}
+
+
+
+
+
+function reject(row){
+
+
+fetch(URL,
+{
+
+method:"POST",
+
+body:JSON.stringify({
+
+action:"reject",
+
+row:row
+
+})
+
+})
+
+.then(()=>{
+
+loadRequests();
+
+});
+
+
+}
+
+
+
+
 
 function back(){
 
 window.location.href="dashboard.html";
 
 }
+
+
+loadRequests();
+
 
 </script>
 
