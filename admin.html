@@ -219,34 +219,41 @@ password:password
 
 .then(data=>{
 
-alert("الصلاحية: " + data.role);
+
 
 if(data.success){
 
-    if(
-    data.role=="مدير النظام" ||
-    data.role=="إدارة" ||
-    data.role=="ادارة"
-    ){
+if(
+data.role=="مدير النظام" ||
+data.role=="إدارة" ||
+data.role=="ادارة"
+){
 
-        window.location.href="./dashboard.html";
+window.location.href="dashboard.html";
 
-    }
+}
 
-    else if(data.role=="موظف"){
+else if(data.role=="موظف"){
 
-        window.location.href="https://script.google.com/macros/s/AKfycbxWIzQoHaQA0RtQiXrL6N0xjcXEE0StIxTrvdsSiGqkvBBYkeX07-ve58jeACZXTdgk_A/exec";
+window.location.href="https://script.google.com/macros/s/AKfycbxWIzQoHaQA0RtQiXrL6N0xjcXEE0StIxTrvdsSiGqkvBBYkeX07-ve58jeACZXTdgk_A/exec";
 
-    }
+}
 
 }
 
 else{
 
-document.getElementById("message").innerHTML =
-data.message;
+document.getElementById("message").innerHTML=data.message;
 
 }
+
+}
+
+
+
+
+
+
 
 })
 
