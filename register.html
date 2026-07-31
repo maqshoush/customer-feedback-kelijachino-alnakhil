@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>طلب إنشاء حساب</title>
+
+<style>
+
+*{
+box-sizing:border-box;
+font-family:Arial,Tahoma;
+}
+
+body{
+
+margin:0;
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+background:#f5f5f5;
+
+}
+
+
+.box{
+
+width:90%;
+max-width:420px;
+background:white;
+padding:30px;
+border-radius:20px;
+box-shadow:0 5px 20px #0002;
+text-align:center;
+
+}
+
+
+h2{
+
+margin-bottom:25px;
+
+}
+
+
+input,select{
+
+width:100%;
+padding:13px;
+margin-bottom:15px;
+border:1px solid #ddd;
+border-radius:10px;
+font-size:16px;
+
+}
+
+
+button{
+
+width:100%;
+padding:14px;
+border:0;
+border-radius:10px;
+background:green;
+color:white;
+font-size:16px;
+cursor:pointer;
+
+}
+
+
+button:hover{
+
+background:#006f00;
+
+}
+
+
+#msg{
+
+margin-top:15px;
+color:red;
+
+}
+
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<div class="box">
+
+
+<h2>
+طلب إنشاء حساب جديد
+</h2>
+
+
+<input id="name" placeholder="الاسم الكامل">
+
+
+<input id="email" type="email" placeholder="البريد الإلكتروني">
+
+
+<input id="phone" placeholder="رقم الجوال">
+
+
+<input id="username" placeholder="اسم المستخدم">
+
+
+<input id="password" type="password" placeholder="كلمة المرور">
+
+
+<select id="type">
+
+<option value="موظف">
+موظف
+</option>
+
+<option value="إدارة">
+إدارة
+</option>
+
+</select>
+
+
+<button onclick="sendRequest()">
+إرسال الطلب
+</button>
+
+
+<div id="msg"></div>
+
+
+</div>
+
+
+
+<script>
+
+
+function sendRequest(){
+
+
+let data={
+
+action:"registerRequest",
+
+name:document.getElementById("name").value,
+
+email:document.getElementById("email").value,
+
+phone:document.getElementById("phone").value,
+
+username:document.getElementById("username").value,
+
+password:document.getElementById("password").value,
+
+type:document.getElementById("type").value
+
+};
+
+
+
+if(!data.name || !data.email || !data.phone || !data.username || !data.password){
+
+document.getElementById("msg").innerHTML=
+"الرجاء تعبئة جميع البيانات";
+
+return;
+
+}
+
+
+
+fetch("رابط-السكريبت-هنا",
+{
+
+method:"POST",
+
+body:JSON.stringify(data)
+
+})
+
+
+.then(r=>r.json())
+
+
+.then(res=>{
+
+
+if(res.success){
+
+document.getElementById("msg").style.color="green";
+
+document.getElementById("msg").innerHTML=
+"تم إرسال الطلب بنجاح";
+
+}
+
+else{
+
+document.getElementById("msg").innerHTML=
+res.message;
+
+}
+
+
+})
+
+
+.catch(()=>{
+
+document.getElementById("msg").innerHTML=
+"حدث خطأ في الاتصال";
+
+});
+
+
+}
+
+
+</script>
+
+
+</body>
+
+</html>
