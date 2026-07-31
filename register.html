@@ -138,43 +138,24 @@ color:red;
 
 
 <div id="msg"></div>
-
-
-</div>
-
-
-
 <script>
-
 
 function sendRequest(){
 
-
 let data={
-
 action:"register",
-
 name:document.getElementById("name").value,
-
 email:document.getElementById("email").value,
-
 phone:document.getElementById("phone").value,
-
 username:document.getElementById("username").value,
-
 password:document.getElementById("password").value,
-
 type:document.getElementById("type").value
-
 };
-
 
 
 if(!data.name || !data.email || !data.phone || !data.username || !data.password){
 
-document.getElementById("msg").innerHTML=
-"الرجاء تعبئة جميع البيانات";
-
+document.getElementById("msg").innerHTML="الرجاء تعبئة جميع البيانات";
 return;
 
 }
@@ -182,60 +163,24 @@ return;
 
 fetch("https://script.google.com/macros/s/AKfycbxbnrzn9Wr9bw7Wwx_1orSMU-r_he6PkfR0sne79blA63DDHirYcMSdgznHc6c-av0vqw/exec",
 {
-
 method:"POST",
-
-mode:"cors",
-
-headers:{
-"Content-Type":"text/plain;charset=utf-8"
-},
-
+mode:"no-cors",
 body:JSON.stringify(data)
-
 })
-
-
-.then(r=>r.json())
-
-
-.then(res=>{
-
-
-if(res.success){
+.then(()=>{
 
 document.getElementById("msg").style.color="green";
-
-document.getElementById("msg").innerHTML=
-"تم إرسال الطلب بنجاح";
-
-}
-
-else{
-
-document.getElementById("msg").innerHTML=
-res.message;
-
-}
-
+document.getElementById("msg").innerHTML="تم إرسال الطلب بنجاح";
 
 })
-
-
 .catch(()=>{
 
-document.getElementById("msg").innerHTML=
-"حدث خطأ في الاتصال";
+document.getElementById("msg").innerHTML="حدث خطأ في الاتصال";
 
 });
 
-
 }
-
 
 </script>
 
-
-</body>
-
-</html>
+</div>
