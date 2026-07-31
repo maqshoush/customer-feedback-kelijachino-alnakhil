@@ -180,11 +180,16 @@ return;
 }
 
 
-
 fetch("https://script.google.com/macros/s/AKfycbxbnrzn9Wr9bw7Wwx_1orSMU-r_he6PkfR0sne79blA63DDHirYcMSdgznHc6c-av0vqw/exec",
 {
 
 method:"POST",
+
+mode:"cors",
+
+headers:{
+"Content-Type":"text/plain;charset=utf-8"
+},
 
 body:JSON.stringify(data)
 
