@@ -25,7 +25,6 @@ background:#f7f7f7;
 }
 
 .box{
-
 width:90%;
 max-width:400px;
 background:white;
@@ -33,38 +32,33 @@ padding:35px;
 border-radius:18px;
 box-shadow:0 5px 25px #0002;
 text-align:center;
-
 }
 
 input,button{
-
 width:100%;
 padding:14px;
 margin-bottom:15px;
 border-radius:10px;
 font-size:16px;
-
 }
 
 input{
-
 border:1px solid #ddd;
-
 }
 
 button{
-
 border:0;
 background:#222;
 color:white;
 cursor:pointer;
+}
 
+#codeBox{
+display:none;
 }
 
 #msg{
-
 color:red;
-
 }
 
 </style>
@@ -91,8 +85,20 @@ color:red;
 <input id="email" placeholder="البريد الإلكتروني">
 
 
-<button onclick="sendCode()">
+<div id="codeBox">
+
+<input id="code" placeholder="رمز التحقق">
+
+</div>
+
+
+<button onclick="sendCode()" id="sendBtn">
 إرسال رمز التحقق
+</button>
+
+
+<button onclick="verify()" id="verifyBtn" style="display:none;">
+تأكيد الرمز
 </button>
 
 
@@ -109,21 +115,11 @@ color:red;
 const URL="https://script.google.com/macros/s/AKfycbxbnrzn9Wr9bw7Wwx_1orSMU-r_he6PkfR0sne79blA63DDHirYcMSdgznHc6c-av0vqw/exec";
 
 
+
 function sendCode(){
 
 
 let email=document.getElementById("email").value.trim();
-
-
-if(email==""){
-
-document.getElementById("msg").innerHTML=
-"اكتب البريد الإلكتروني";
-
-return;
-
-}
-
 
 
 fetch(URL,{
@@ -148,10 +144,74 @@ email:email
 
 if(data.success){
 
+
 document.getElementById("msg").style.color="green";
 
 document.getElementById("msg").innerHTML=
-"تم إرسال رمز التحقق إلى بريدك";
+"تم إرسال رمز التحقق";
+
+
+document.getElementById("codeBox").style.display="block";
+
+document.getElementById("sendBtn").style.display="none";
+
+document.getElementById("verifyBtn").style.display="block";
+
+
+}
+
+else{
+
+document.getElementById("msg").innerHTML=data.message;
+
+}
+
+
+});
+
+
+}
+
+
+
+
+function verify(){
+
+
+let email=document.getElementById("email").value.trim();
+
+let code=document.getElementById("code").value.trim();
+
+
+
+fetch(URL,{
+
+method:"POST",
+
+body:JSON.stringify({
+
+action:"verifyCode",
+
+email:email,
+
+code:code
+
+})
+
+})
+
+
+.then(r=>r.json())
+
+.then(data=>{
+
+
+if(data.success){
+
+
+location.href=
+"newpassword.html?email="+email;
+
 
 }
 
@@ -162,14 +222,6 @@ data.message;
 
 }
 
-
-})
-
-
-.catch(()=>{
-
-document.getElementById("msg").innerHTML=
-"حدث خطأ في الاتصال";
 
 });
 
