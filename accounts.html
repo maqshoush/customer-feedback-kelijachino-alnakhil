@@ -190,8 +190,9 @@ document.getElementById("table").innerHTML=html;
 
 
 
-
 function toggle(user){
+
+if(confirm("هل أنت متأكد من تغيير حالة هذا الحساب؟")){
 
 fetch(URL,{
 method:"POST",
@@ -204,12 +205,16 @@ username:user
 
 }
 
+}
+
+
+
 
 
 
 function del(user){
 
-if(confirm("حذف الحساب؟")){
+if(confirm("⚠️ هل أنت متأكد من حذف هذا الحساب؟\nلا يمكن التراجع بعد الحذف.")){
 
 fetch(URL,{
 method:"POST",
