@@ -131,7 +131,9 @@ return;
 
 
 if(data.role.trim()=="مدير النظام"){
-
+localStorage.setItem("loggedIn","true");
+localStorage.setItem("role",data.role.trim());
+localStorage.setItem("lastActivity",Date.now());
 location.replace(
 "https://maqshoush.github.io/customer-feedback-kelijachino-alnakhil/dashboard.html"
 );
@@ -140,7 +142,17 @@ location.replace(
 
 
 else if(data.role.trim()=="موظف"){
+if(data.role.trim()=="مدير النظام"){
 
+localStorage.setItem("loggedIn","true");
+localStorage.setItem("role",data.role.trim());
+localStorage.setItem("lastActivity",Date.now());
+
+location.replace(
+"https://maqshoush.github.io/customer-feedback-kelijachino-alnakhil/dashboard.html"
+);
+
+}
 location.replace(
 "https://script.google.com/macros/s/AKfycbxWIzQoHaQA0RtQiXrL6N0xjcXEE0StIxTrvdsSiGqkvBBYkeX07-ve58jeACZXTdgk_A/exec"
 );
