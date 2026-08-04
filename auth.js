@@ -1,7 +1,10 @@
 function checkSession(){
 
 let loggedIn = localStorage.getItem("loggedIn");
-
+alert(
+"الدخول: " + loggedIn +
+"\nآخر نشاط: " + localStorage.getItem("lastActivity")
+);
 let lastActivity = localStorage.getItem("lastActivity");
 
 
