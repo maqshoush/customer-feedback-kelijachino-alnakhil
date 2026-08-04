@@ -173,6 +173,7 @@ color:white;
 
 
 <body>
+  <div id="notifyBox" class="notifyBox"></div>
 <div class="top-bar">
 
 <h1>
@@ -183,7 +184,6 @@ color:white;
 <button id="themeBtn" onclick="toggleTheme()">
 🌙
 </button>
-<div id="notifyBox" class="notifyBox"></div>
 
 </div>
 
@@ -250,7 +250,79 @@ function logout(){
 window.location.href="admin.html";
 
 }
+const URL="https://script.google.com/macros/s/AKfycbxbnrzn9Wr9bw7Wwx_1orSMU-r_he6PkfR0sne79blA63DDHirYcMSdgznHc6c-av0vqw/exec";
 
+
+function checkRequests(){
+
+
+fetch(URL,{
+
+method:"POST",
+
+body:JSON.stringify({
+
+action:"requestCount"
+
+})
+
+})
+
+
+.then(r=>r.json())
+
+
+.then(data=>{
+
+
+let count=data.count;
+
+let box=document.getElementById("notifyBox");
+
+
+if(count>0){
+
+
+box.style.display="flex";
+
+box.classList.remove("small");
+
+
+box.innerHTML="لديك "+count+" طلبات جديدة!";
+
+
+setTimeout(()=>{
+
+
+box.classList.add("small");
+
+box.innerHTML=count;
+
+
+},5000);
+
+
+}
+
+else{
+
+
+box.style.display="none";
+
+
+}
+
+
+});
+
+
+}
+
+
+
+checkRequests();
+
+setInterval(checkRequests,60000);
 </script>
 <script src="auth.js"></script>
   <script src="theme.js"></script>
