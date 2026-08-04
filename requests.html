@@ -3,65 +3,172 @@
 
 <head>
 
+<script src="auth.js"></script>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>طلبات التسجيل</title>
 
+
 <style>
 
-body{
-font-family:Arial;
-background:#f5f5f5;
-padding:20px;
+*{
+box-sizing:border-box;
+font-family:Arial,Tahoma,sans-serif;
 }
+
+
+body{
+
+margin:0;
+background:#f5f5f5;
+padding:30px;
+
+}
+
+
+
+.container{
+
+max-width:1200px;
+margin:auto;
+
+}
+
+
 
 h1{
+
 text-align:center;
+margin-bottom:35px;
+color:#222;
+
 }
 
-.box{
+
+
+.cards{
+
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+gap:25px;
+
+}
+
+
+
+.card{
+
 background:white;
-padding:20px;
-border-radius:20px;
-overflow:auto;
+border-radius:22px;
+padding:25px;
+
+border:2px solid #22c55e;
+
+box-shadow:0 8px 25px rgba(0,0,0,.08);
+
 }
 
-table{
-width:100%;
-border-collapse:collapse;
-}
 
-th{
-background:#222;
-color:white;
-padding:12px;
-}
 
-td{
-padding:12px;
-border-bottom:1px solid #ddd;
+.icon{
+
 text-align:center;
+font-size:45px;
+margin-bottom:15px;
+
 }
+
+
+
+.info{
+
+margin-bottom:10px;
+color:#444;
+
+}
+
+
+
+.info span{
+
+font-weight:bold;
+color:#222;
+
+}
+
+
+
+.status{
+
+display:inline-block;
+padding:7px 15px;
+border-radius:20px;
+background:#fff3cd;
+color:#a16207;
+
+}
+
+
+
+.actions{
+
+display:flex;
+gap:10px;
+margin-top:20px;
+
+}
+
+
 
 button{
-padding:8px;
+
+flex:1;
+padding:12px;
+
 border:0;
-border-radius:8px;
+border-radius:12px;
+
 cursor:pointer;
+
+font-size:15px;
+
 }
+
+
 
 .accept{
-background:green;
+
+background:#16a34a;
 color:white;
+
 }
+
+
 
 .reject{
-background:red;
+
+background:#dc2626;
 color:white;
+
 }
 
+
+
+.empty{
+
+background:white;
+padding:30px;
+border-radius:20px;
+text-align:center;
+
+}
+
+
+
 </style>
+
 
 </head>
 
@@ -69,37 +176,21 @@ color:white;
 <body>
 
 
+<div class="container">
+
+
 <h1>
-طلبات التسجيل
+👤➕ طلبات التسجيل الجديدة
 </h1>
 
 
-<div class="box">
 
-<table>
-
-<thead>
-
-<tr>
-<th>الاسم</th>
-<th>اسم المستخدم</th>
-<th>البريد</th>
-<th>الجوال</th>
-<th>الحالة</th>
-<th>الإجراء</th>
-</tr>
-
-</thead>
+<div id="list" class="cards"></div>
 
 
-<tbody id="list">
-
-</tbody>
-
-
-</table>
 
 </div>
+
 
 
 
@@ -120,6 +211,7 @@ action:"requests"
 
 .then(r=>r.json())
 
+
 .then(data=>{
 
 
@@ -128,9 +220,15 @@ let html="";
 
 if(data.length==0){
 
-html="<tr><td colspan='6'>لا توجد طلبات</td></tr>";
+html=`
+<div class="empty">
+لا توجد طلبات تسجيل حالياً
+</div>
+`;
 
 }
+
+else{
 
 
 data.forEach(r=>{
@@ -138,39 +236,88 @@ data.forEach(r=>{
 
 html+=`
 
-<tr>
-
-<td>${r.name}</td>
-
-<td>${r.username}</td>
-
-<td>${r.email}</td>
-
-<td>${r.phone}</td>
-
-<td>${r.status}</td>
+<div class="card">
 
 
-<td>
+<div class="icon">
+👤➕
+</div>
+
+
+
+<div class="info">
+<span>الاسم:</span>
+${r.name}
+</div>
+
+
+
+<div class="info">
+<span>اسم المستخدم:</span>
+${r.username}
+</div>
+
+
+
+<div class="info">
+<span>البريد:</span>
+${r.email}
+</div>
+
+
+
+<div class="info">
+<span>الجوال:</span>
+${r.phone}
+</div>
+
+
+
+<div class="info">
+
+<span>الحالة:</span>
+
+<br>
+
+<span class="status">
+${r.status}
+</span>
+
+</div>
+
+
+
+<div class="actions">
+
 
 <button class="accept" onclick="approve(${r.row})">
-قبول
+
+✅ قبول
+
 </button>
+
 
 
 <button class="reject" onclick="reject(${r.row})">
-رفض
+
+❌ رفض
+
 </button>
 
-</td>
+
+</div>
 
 
-</tr>
+</div>
 
 
 `;
 
 });
+
+
+}
+
 
 
 document.getElementById("list").innerHTML=html;
@@ -183,38 +330,71 @@ document.getElementById("list").innerHTML=html;
 
 
 
+
 function approve(row){
 
+
+if(confirm("هل أنت متأكد من قبول الطلب؟")){
+
+
 fetch(URL,{
+
 method:"POST",
+
 body:JSON.stringify({
+
 action:"approve",
+
 row:row
+
 })
+
 })
+
 .then(()=>location.reload());
 
+
 }
+
+
+}
+
 
 
 
 
 function reject(row){
 
+
+if(confirm("هل أنت متأكد من رفض الطلب؟")){
+
+
 fetch(URL,{
+
 method:"POST",
+
 body:JSON.stringify({
+
 action:"reject",
+
 row:row
+
 })
+
 })
+
 .then(()=>location.reload());
+
+
+}
+
 
 }
 
 
 
 </script>
+
 
 
 </body>
