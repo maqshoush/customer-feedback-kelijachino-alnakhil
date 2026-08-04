@@ -1,10 +1,7 @@
 function checkSession(){
 
 let loggedIn = localStorage.getItem("loggedIn");
-alert(
-"الدخول: " + loggedIn +
-"\nآخر نشاط: " + localStorage.getItem("lastActivity")
-);
+
 let lastActivity = localStorage.getItem("lastActivity");
 
 
@@ -22,7 +19,7 @@ let now = Date.now();
 let diff = (now - Number(lastActivity)) / 1000 / 60;
 
 
-if(diff >= 1/60){
+if(diff >= 0.5){
 
 localStorage.clear();
 
