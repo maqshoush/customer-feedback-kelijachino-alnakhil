@@ -7,17 +7,21 @@ if(theme=="dark"){
 
 document.body.classList.add("dark");
 
+}
+
+
 changeIcon();
 
 }
 
-}
 
 
 
 function toggleTheme(){
 
+
 document.body.classList.toggle("dark");
+
 
 
 if(document.body.classList.contains("dark")){
@@ -33,17 +37,23 @@ localStorage.setItem("theme","light");
 }
 
 
+
 changeIcon();
+
 
 }
 
 
 
+
 function changeIcon(){
+
 
 let btn=document.getElementById("themeBtn");
 
+
 if(!btn) return;
+
 
 
 if(document.body.classList.contains("dark")){
@@ -58,12 +68,16 @@ btn.innerHTML="🌙";
 
 }
 
+
 }
 
 
 
-window.onload=function(){
+
+// تشغيل الثيم عند فتح أي صفحة
+
+document.addEventListener("DOMContentLoaded",function(){
 
 loadTheme();
 
-};
+});
