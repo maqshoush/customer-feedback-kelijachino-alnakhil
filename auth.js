@@ -42,7 +42,7 @@ let now = Date.now();
 let diff = (now - Number(lastActivity)) / 1000 / 60;
 
 
-if(diff >= 0.5){
+if(diff >= 10){
 
 localStorage.clear();
 
