@@ -7,6 +7,8 @@ let lastActivity = localStorage.getItem("lastActivity");
 
 if(loggedIn!="true" || !lastActivity){
 
+localStorage.clear();
+
 location.replace("admin.html");
 
 return;
@@ -19,6 +21,7 @@ let now = Date.now();
 let diff = (now - Number(lastActivity)) / 1000 / 60;
 
 
+// اختبار مؤقت 30 ثانية
 if(diff >= 0.5){
 
 localStorage.clear();
@@ -32,25 +35,27 @@ location.replace("admin.html");
 
 // تحديث وقت النشاط
 
-document.addEventListener("mousemove",function(){
+function updateActivity(){
 
 localStorage.setItem("lastActivity",Date.now());
 
-});
+}
 
 
-document.addEventListener("click",function(){
+document.addEventListener("mousemove",updateActivity);
 
-localStorage.setItem("lastActivity",Date.now());
+document.addEventListener("click",updateActivity);
 
-});
+document.addEventListener("keydown",updateActivity);
+
+document.addEventListener("touchstart",updateActivity);
 
 
-document.addEventListener("keydown",function(){
-
-localStorage.setItem("lastActivity",Date.now());
-
-});
-
+// فحص الجلسة عند فتح الصفحة
 
 checkSession();
+
+
+// إعادة الفحص كل ثانية
+
+setInterval(checkSession,1000);
