@@ -14,13 +14,15 @@
 <style>
 .back-btn{
 
-position:fixed;
+position:fixed !important;
 
 top:20px;
 right:20px;
 
 width:52px;
 height:52px;
+
+z-index:999999;
 
 border-radius:50%;
 
@@ -31,60 +33,26 @@ background:rgba(255,255,255,0.35);
 backdrop-filter:blur(15px);
 -webkit-backdrop-filter:blur(15px);
 
-box-shadow:
-0 8px 25px rgba(0,0,0,0.12),
-inset 0 0 10px rgba(255,255,255,0.5);
-
 display:flex;
+
 align-items:center;
+
 justify-content:center;
 
 cursor:pointer;
-
-z-index:9999;
-
-transition:.3s;
 
 }
 
 
 .back-btn span{
 
-font-size:38px;
+color:#111;
 
-font-family:Arial;
+font-size:38px;
 
 font-weight:300;
 
 line-height:1;
-
-color:#111;
-
-margin-top:-5px;
-
-}
-
-
-
-/* الوضع الليلي */
-
-body.dark .back-btn{
-
-background:rgba(255,255,255,0.12);
-
-border:1px solid rgba(255,255,255,0.25);
-
-box-shadow:
-0 8px 25px rgba(0,0,0,0.4),
-inset 0 0 10px rgba(255,255,255,0.15);
-
-}
-
-
-
-body.dark .back-btn span{
-
-color:white;
 
 }
 
