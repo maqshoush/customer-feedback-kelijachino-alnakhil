@@ -2,7 +2,7 @@
 <html lang="ar" dir="rtl">
 
 <head>
-  
+ <link rel="stylesheet" href="loader.css"> 
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -298,28 +298,34 @@ color:white;
 
 <script>
 
+
 function ratings(){
 
-window.location.href=
-"https://script.google.com/macros/s/AKfycbxbnrzn9Wr9bw7Wwx_1orSMU-r_he6PkfR0sne79blA63DDHirYcMSdgznHc6c-av0vqw/exec";
+showLoader();
+
+window.location.href="loading.html";
+
 
 }
 
 
-
 function accounts(){
+
+showLoader();
 
 window.location.href="accounts.html";
 
 }
 
 
-
 function requests(){
+
+showLoader();
 
 window.location.href="requests.html";
 
 }
+
 
 
 
@@ -421,7 +427,13 @@ setInterval(checkRequests,60000);
 
 <script src="theme.js"></script>
 
+<div id="loader">
 
+<img src="RIDEX_icon_clean.svg">
+
+</div>
+
+<script src="loader.js"></script>
 </body>
 
 </html>
