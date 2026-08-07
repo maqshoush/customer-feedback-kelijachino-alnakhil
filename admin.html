@@ -333,13 +333,17 @@ document.getElementById("message").innerHTML=
 
 })
 
+
 .catch(()=>{
 
 document.getElementById("message").innerHTML=
 "خطأ في الاتصال";
 
 });
-}
+
+} // <-- إغلاق دالة login هنا
+
+
 function registerRequest(){
 
 let btn=document.querySelector(".register-btn");
@@ -356,8 +360,6 @@ window.location.href="register.html";
 },1200);
 
 }
-}
-
 
 </script>
 
