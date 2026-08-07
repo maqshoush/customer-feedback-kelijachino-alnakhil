@@ -238,7 +238,59 @@ body.dark button{
 color:white;
 
 }
+.back-btn{
 
+position:fixed;
+
+top:20px;
+right:20px;
+
+padding:12px 22px;
+
+border:none;
+
+border-radius:12px;
+
+font-size:15px;
+
+color:white;
+
+cursor:pointer;
+
+
+background:linear-gradient(
+270deg,
+#12A8FF,
+#2563EB,
+#8B2CFF,
+#F03BD4
+);
+
+
+background-size:400% 400%;
+
+animation:backMove 5s ease infinite;
+
+box-shadow:0 4px 15px #0003;
+
+}
+
+
+@keyframes backMove{
+
+0%{
+background-position:0% 50%;
+}
+
+50%{
+background-position:100% 50%;
+}
+
+100%{
+background-position:0% 50%;
+}
+
+}
 </style>
 
 
@@ -247,7 +299,9 @@ color:white;
 
 
 <body>
-
+<button class="back-btn" onclick="goBack()">
+↩ لوحة الإدارة
+</button>
 
 
 <div class="container">
@@ -482,7 +536,11 @@ function back(){
 location.href="dashboard.html";
 
 }
+function goBack(){
 
+window.location.href="dashboard.html";
+
+}
 </script>
 
 
