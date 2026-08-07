@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Loading</title>
+
+<style>
+
+body{
+
+margin:0;
+height:100vh;
+
+display:flex;
+justify-content:center;
+align-items:center;
+
+background:#f7f7f7;
+
+overflow:hidden;
+
+}
+
+
+.loader{
+
+position:fixed;
+
+inset:0;
+
+background:rgba(255,255,255,0.75);
+
+backdrop-filter:blur(10px);
+
+display:flex;
+
+justify-content:center;
+
+align-items:center;
+
+}
+
+
+.loader img{
+
+width:180px;
+
+animation:logoPulse 2s infinite;
+
+}
+
+
+@keyframes logoPulse{
+
+0%{
+transform:scale(.9);
+opacity:.5;
+}
+
+50%{
+transform:scale(1);
+opacity:1;
+}
+
+100%{
+transform:scale(.9);
+opacity:.5;
+}
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<div class="loader">
+
+<img src="RIDEX_icon_clean.svg">
+
+</div>
+
+
+
+<script>
+
+setTimeout(()=>{
+
+window.location.href=
+"https://script.google.com/macros/s/AKfycbxbnrzn9Wr9bw7Wwx_1orSMU-r_he6PkfR0sne79blA63DDHirYcMSdgznHc6c-av0vqw/exec";
+
+},1500);
+
+
+</script>
+
+
+</body>
+
+</html>
