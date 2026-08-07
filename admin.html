@@ -154,53 +154,54 @@ background-position:0% 50%;
 #message{
 color:red;
 }
- 
-  .swipe-register{
 
-position:relative;
+
+
+
+.register-btn{
+
 width:100%;
-height:50px;
-border:2px solid #2563EB;
-border-radius:25px;
+padding:14px;
+
 margin-top:15px;
-overflow:hidden;
-display:flex;
-align-items:center;
-justify-content:center;
+
+border:none;
+
+border-radius:10px;
+
+font-size:16px;
+
+color:white;
+
 cursor:pointer;
-user-select:none;
-color:#2563EB;
-font-weight:bold;
+
+background:#16A34A;
+
+transition:.4s;
 
 }
 
 
-.swipe-fill{
-
-position:absolute;
-right:0;
-top:0;
-height:100%;
-width:0%;
+.register-btn.active{
 
 background:linear-gradient(
 270deg,
+#16A34A,
+#14B8A6,
 #12A8FF,
 #2563EB,
 #8B2CFF,
-#F03BD4
+#E879F9
 );
 
 background-size:400% 400%;
 
-animation:swipeColor 5s ease infinite;
-
-transition:0.05s;
+animation:registerMove 2s ease infinite;
 
 }
 
 
-@keyframes swipeColor{
+@keyframes registerMove{
 
 0%{
 background-position:0% 50%;
@@ -217,47 +218,6 @@ background-position:0% 50%;
 }
 
 
-.swipe-circle{
-
-position:absolute;
-right:5px;
-z-index:3;
-
-width:38px;
-height:38px;
-
-border-radius:50%;
-
-background:linear-gradient(
-270deg,
-#12A8FF,
-#2563EB,
-#8B2CFF,
-#F03BD4
-);
-
-color:white;
-
-display:flex;
-align-items:center;
-justify-content:center;
-
-}
-
-
-.swipe-register.done span{
-
-color:white;
-
-}
-
-
-.swipe-register.done .swipe-circle{
-
-background:white;
-color:#00c853;
-
-}
 
 </style>
 
@@ -277,11 +237,9 @@ color:#00c853;
 
 <button onclick="login()">دخول</button>
 
-<div class="swipe-register" id="swipeRegister">
-    <div class="swipe-fill"></div>
-    <span>اسحب لطلب إنشاء حساب</span>
-    <div class="swipe-circle">➜</div>
-</div>
+<button class="register-btn" onclick="registerRequest()">
+طلب إنشاء حساب
+</button>
 
 
 <a href="forgot.html" style="
@@ -381,103 +339,26 @@ document.getElementById("message").innerHTML=
 "خطأ في الاتصال";
 
 });
-
-
 }
-let swipe = document.getElementById("swipeRegister");
-let fill = swipe.querySelector(".swipe-fill");
-let text = swipe.querySelector("span");
-let circle = swipe.querySelector(".swipe-circle");
+function registerRequest(){
 
-let startX = 0;
-let current = 0;
-let dragging = false;
+let btn=document.querySelector(".register-btn");
 
+btn.classList.add("active");
 
-swipe.addEventListener("mousedown",start);
-swipe.addEventListener("touchstart",start);
-
-
-function start(e){
-
-dragging=true;
-
-startX = e.touches ? e.touches[0].clientX : e.clientX;
-
-}
-
-
-document.addEventListener("mousemove",move);
-document.addEventListener("touchmove",move);
-
-
-function move(e){
-
-if(!dragging) return;
-
-
-let x = e.touches ? e.touches[0].clientX : e.clientX;
-
-let diff = startX - x;
-
-
-current = Math.max(0,Math.min(diff, swipe.offsetWidth));
-
-
-let percent = (current / swipe.offsetWidth) * 100;
-
-
-fill.style.width = percent+"%";
-fill.style.animationDuration = (5 - (percent/25))+"s";
-
-if(percent > 20){
-
-text.style.opacity = 1 - percent/100;
-
-}
-
-
-if(percent >= 85){
-
-dragging=false;
-
-swipe.classList.add("done");
-
-circle.innerHTML="✓";
+btn.innerHTML="جاري فتح طلب إنشاء حساب...";
 
 
 setTimeout(()=>{
 
 window.location.href="register.html";
 
-},500);
+},1200);
 
 }
-
 }
 
 
-
-document.addEventListener("mouseup",reset);
-document.addEventListener("touchend",reset);
-
-
-function reset(){
-
-if(!dragging) return;
-
-dragging=false;
-
-
-if(current < swipe.offsetWidth*0.85){
-
-fill.style.width="0%";
-
-text.style.opacity="1";
-
-}
-
-}
 </script>
 
 
