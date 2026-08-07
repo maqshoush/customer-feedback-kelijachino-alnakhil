@@ -19,15 +19,6 @@ position:fixed !important;
 top:20px;
 right:20px;
 
-transform:translateZ(0);
-
--webkit-transform:translateZ(0);
-
-will-change:transform;
-
-top:20px;
-right:20px;
-
 width:52px;
 height:52px;
 
@@ -37,10 +28,7 @@ border-radius:50%;
 
 border:1px solid rgba(0,0,0,0.15);
 
-background:rgba(255,255,255,0.35);
-
-backdrop-filter:blur(15px);
--webkit-backdrop-filter:blur(15px);
+background:rgba(255,255,255,0.6);
 
 display:flex;
 
@@ -303,7 +291,9 @@ color:white;
 <button class="back-btn" onclick="goBack()">
 <span>‹</span>
 </button>
-
+html,body{
+overflow-x:hidden;
+}
 
 <div class="container">
 
