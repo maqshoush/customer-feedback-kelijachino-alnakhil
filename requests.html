@@ -77,7 +77,7 @@ left:100%;
 
 }
   
- .back-container{
+.back-btn{
 
 position:fixed !important;
 
@@ -86,7 +86,22 @@ right:20px !important;
 
 z-index:99999999 !important;
 
-transform:translate3d(0,0,0);
+width:52px;
+height:52px;
+
+border-radius:50%;
+
+border:1px solid rgba(0,0,0,0.15);
+
+background:rgba(255,255,255,0.6);
+
+display:flex;
+
+align-items:center;
+
+justify-content:center;
+
+cursor:pointer;
 
 }
 
@@ -260,10 +275,6 @@ cursor:pointer;
 font-size:15px;
 }
 
-.back-btn{
-flex:none;
-padding:0;
-}
 
 .accept{
 
@@ -349,13 +360,9 @@ color:white;
 
 
 <body>
-<div class="back-container">
-
 <button class="back-btn" onclick="goBack()">
 <span>‹</span>
 </button>
-
-</div>
 
 <div class="container">
 
