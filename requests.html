@@ -12,7 +12,7 @@
 
 
 <style>
-  .skeleton-card{
+ .skeleton-card{
 
 background:white;
 
@@ -26,7 +26,16 @@ overflow:hidden;
 
 position:relative;
 
+box-shadow:0 8px 25px rgba(0,0,0,.08);
+
 }
+
+
+body.dark .skeleton-card{
+
+background:#1e1e1e;
+
+} 
 
 
 .skeleton-card::before{
@@ -63,6 +72,13 @@ background:#e5e5e5;
 border-radius:10px;
 
 margin:25px;
+
+}
+
+
+body.dark .skeleton-line{
+
+background:#333;
 
 }
 
@@ -388,12 +404,6 @@ color:white;
 const URL="https://script.google.com/macros/s/AKfycbxbnrzn9Wr9bw7Wwx_1orSMU-r_he6PkfR0sne79blA63DDHirYcMSdgznHc6c-av0vqw/exec";
 
 document.getElementById("list").innerHTML=`
-
-<div class="skeleton-card">
-<div class="skeleton-line"></div>
-<div class="skeleton-line"></div>
-<div class="skeleton-line"></div>
-</div>
 
 <div class="skeleton-card">
 <div class="skeleton-line"></div>
