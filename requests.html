@@ -77,17 +77,33 @@ left:100%;
 
 }
   
-  .back-container{
+ .back-container{
 
-position:fixed;
-top:20px;
-right:20px;
+position:fixed !important;
 
-z-index:99999999;
+top:20px !important;
+right:20px !important;
+
+z-index:99999999 !important;
+
+transform:translate3d(0,0,0);
 
 }
 
+body{
 
+margin:0;
+background:#f5f5f5;
+padding:30px;
+}
+
+.back-container,
+.back-btn{
+
+-webkit-transform:translateZ(0);
+
+}
+  
 .back-btn{
 
 width:52px;
