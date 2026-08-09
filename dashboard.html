@@ -224,6 +224,115 @@ color:white;
 
 }
 
+ .brand-footer{
+
+margin-top:70px;
+text-align:center;
+position:relative;
+overflow:hidden;
+padding:50px 20px;
+}
+
+
+.brand-logo{
+
+width:120px;
+position:relative;
+z-index:2;
+
+}
+
+
+.brand-footer h3{
+
+color:#111;
+font-size:22px;
+position:relative;
+z-index:2;
+
+}
+
+
+.support{
+
+display:inline-block;
+margin-top:20px;
+padding:12px 35px;
+border-radius:30px;
+text-decoration:none;
+font-size:20px;
+font-weight:bold;
+
+background:linear-gradient(
+90deg,
+#1da1f2,
+#7b2cff,
+#1da1f2
+);
+
+background-size:300%;
+animation:moveColor 5s infinite;
+
+color:white;
+position:relative;
+z-index:2;
+
+}
+
+
+.brand-footer p{
+
+color:#777;
+font-size:15px;
+line-height:2;
+position:relative;
+z-index:2;
+
+}
+
+
+.tech-lines{
+
+position:absolute;
+bottom:0;
+left:0;
+width:100%;
+height:150px;
+
+background:
+linear-gradient(
+90deg,
+transparent,
+#1da1f2,
+#7b2cff,
+transparent
+);
+
+opacity:.25;
+
+filter:blur(20px);
+
+animation:moveColor 6s infinite;
+
+}
+
+
+
+@keyframes moveColor{
+
+0%{
+background-position:0%;
+}
+
+50%{
+background-position:100%;
+}
+
+100%{
+background-position:0%;
+}
+
+}
 </style>
 
 </head>
@@ -294,7 +403,34 @@ color:white;
 
 </button>
 
+<div class="brand-footer">
 
+<img src="ضع-رابط-الشعار-هنا.png" class="brand-logo">
+
+<h3>
+ابتكر وصُمم بفخر في المملكة العربية السعودية 🇸🇦
+</h3>
+
+
+<a href="https://wa.me/966582261016" class="support">
+الدعم الفني
+<br>
+0582261016
+</a>
+
+
+<p>
+الإصدار: 1.0.0
+<br>
+حالة النظام: يعمل
+<br>
+آخر تحديث: 2026
+</p>
+
+
+<div class="tech-lines"></div>
+
+</div>
 
 <script>
 
