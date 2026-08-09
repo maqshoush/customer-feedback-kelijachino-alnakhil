@@ -424,8 +424,12 @@ filter:filter
 })
 
 })
-.then(r=>r.json())
-.then(function(data){
+  .then(r=>{
+console.log(r);
+return r.json();
+})
+.then(function(data){  
+
 
 
 
@@ -587,9 +591,6 @@ console.log(error);
 }
 
 
-
-
-}
 
 
 
