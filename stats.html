@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<script src="auth.js"></script>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -199,7 +199,7 @@ border:1px solid #555;
 
 .back-btn{
 
-visibility:hidden;
+display:none;
 
 position:fixed;
 
@@ -653,20 +653,21 @@ loadTheme();
 
 });
 
+
 let role = localStorage.getItem("role");
 
-if(role=="مدير النظام"){
-
-document.getElementById("backBtn").style.visibility="visible";
-
+if(role === "مدير النظام"){
+    document.getElementById("backBtn").style.display="flex";
 }
-
-
-
+else{
+    document.getElementById("backBtn").style.display="none";
+}
+  
 
 function goBack(){
 
-window.location.href="https://maqshoush.github.io/customer-feedback-kelijachino-alnakhil/dashboard.html";
+window.top.location.href =
+"https://maqshoush.github.io/customer-feedback-kelijachino-alnakhil/dashboard.html";
 
 }
 
