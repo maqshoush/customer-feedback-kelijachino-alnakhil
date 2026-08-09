@@ -242,26 +242,25 @@ body:JSON.stringify(data)
 
 .then(res=>{
 
-
 if(res.success){
 
+circle.style.transform="translateX(-230px)";
 
 document.getElementById("msg").style.color="green";
 
 document.getElementById("msg").innerHTML=
 "تم إرسال الطلب، سيتم مراجعة الحساب";
 
-
 }
-
+ 
 else{
 
+circle.style.transform="translateX(0)";
 
 document.getElementById("msg").style.color="red";
 
 document.getElementById("msg").innerHTML=
 res.message;
-
 
 }
 
@@ -355,7 +354,7 @@ return;
 }
 
 
-circle.style.transform="translateX(-230px)";
+
 
 sendRequest();
 
