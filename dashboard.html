@@ -333,6 +333,105 @@ background-position:0%;
 }
 
 }
+ .brand-footer{
+text-align:center;
+margin-top:120px;
+padding:50px 20px 0;
+overflow:hidden;
+}
+
+
+.brand-logo{
+width:220px;
+height:auto;
+object-fit:contain;
+margin-bottom:35px;
+}
+
+
+.support{
+display:flex;
+align-items:center;
+justify-content:center;
+gap:12px;
+text-decoration:none;
+color:white;
+background:#2463d4;
+padding:15px 30px;
+border-radius:40px;
+width:max-content;
+margin:auto;
+font-size:20px;
+font-weight:bold;
+}
+
+
+.support img{
+width:30px;
+height:30px;
+filter:brightness(0) invert(1);
+}
+
+
+.brand-footer h3{
+font-size:22px;
+font-weight:500;
+color:#111;
+margin-top:30px;
+white-space:nowrap;
+}
+
+
+.brand-footer p{
+color:#888;
+font-size:16px;
+line-height:2;
+}
+
+
+.tech-lines{
+height:220px;
+margin-top:40px;
+background:
+linear-gradient(90deg,
+#1e8cff,
+#7b3cff,
+#00c6ff,
+#1e8cff);
+
+background-size:300% 300%;
+animation:moveColors 6s infinite linear;
+
+clip-path:polygon(
+0 100%,
+0 70%,
+10% 40%,
+20% 80%,
+30% 30%,
+40% 70%,
+50% 20%,
+60% 80%,
+70% 35%,
+80% 70%,
+90% 25%,
+100% 60%,
+100% 100%
+);
+
+}
+
+
+@keyframes moveColors{
+
+0%{
+background-position:0% 50%;
+}
+
+100%{
+background-position:300% 50%;
+}
+
+}
 </style>
 
 </head>
@@ -405,18 +504,18 @@ background-position:0%;
 
 <div class="brand-footer">
 
-<img src="logo only .png" class="brand-logo">
+<img src="رابط-الشعار" class="brand-logo">
+
+
+<a href="" class="support">
+<img src="رمز-الدعم.png">
+<span>الدعم الفني 0582261016</span>
+</a>
+
 
 <h3>
-ابتُكِر وصُمم بفخر في المملكة العربية السعودية 🇸🇦
+ابتكر وصُمم بفخر في المملكة العربية السعودية 🇸🇦
 </h3>
-
-
-<a href="https://wa.me/966582261016" class="support">
-الدعم الفني
-<br>
-0582261016
-</a>
 
 
 <p>
@@ -429,6 +528,7 @@ background-position:0%;
 
 
 <div class="tech-lines"></div>
+
 
 </div>
 
