@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="auth.js"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>لوحة تقييمات كليجاتشينو</title>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+
+<style>
+
+body{
+font-family:Arial;
+background:#f5f5f5;
+padding:25px;
+direction:rtl;
+text-align:center;
+}
+
+
+h1{
+font-size:40px;
+margin-bottom:5px;
+}
+
+
+#updateTime{
+
+font-size:18px;
+color:#555;
+margin-bottom:15px;
+
+}
+
+
+
+select{
+
+padding:12px;
+font-size:18px;
+border-radius:10px;
+margin-bottom:25px;
+
+}
+
+
+
+.card{
+
+background:white;
+border-radius:20px;
+padding:25px;
+margin:20px auto;
+width:90%;
+max-width:600px;
+box-shadow:0 5px 15px #ddd;
+
+}
+
+
+
+.number{
+
+font-size:60px;
+font-weight:bold;
+
+}
+
+
+.green{
+
+color:green;
+
+}
+
+
+.red{
+
+color:red;
+
+}
+
+
+
+.chartBox{
+
+background:white;
+border-radius:20px;
+padding:25px;
+margin:20px auto;
+width:90%;
+max-width:600px;
+
+}
+
+
+
+#ratingChart{
+
+max-width:350px;
+margin:auto;
+
+}
+
+
+
+.percentBox{
+
+display:flex;
+justify-content:center;
+gap:30px;
+margin-top:20px;
+font-size:20px;
+font-weight:bold;
+
+}
+
+
+
+.item{
+
+display:flex;
+align-items:center;
+gap:8px;
+
+}
+
+
+
+.line{
+
+width:25px;
+height:4px;
+
+}
+
+.top-bar{
+display:flex;
+justify-content:space-between;
+align-items:center;
+}
+
+
+#themeBtn{
+
+width:50px;
+height:50px;
+border:none;
+border-radius:50%;
+font-size:25px;
+cursor:pointer;
+background:white;
+
+}
+
+
+body.dark{
+
+background:#111;
+color:white;
+
+}
+
+
+body.dark .card,
+body.dark .chartBox{
+
+background:#1e1e1e;
+color:white;
+
+}
+
+
+body.dark h1,
+body.dark h2{
+
+color:white;
+
+}
+
+
+body.dark #updateTime{
+
+color:#ddd;
+
+}
+
+
+body.dark select{
+
+background:#222;
+color:white;
+border:1px solid #555;
+
+}
+
+.back-btn{
+
+visibility:hidden;
+
+position:fixed;
+
+top:20px;
+
+right:20px;
+
+z-index:999999;
+
+width:52px;
+
+height:52px;
+
+border-radius:50%;
+
+border:1px solid rgba(0,0,0,0.15);
+
+background:rgba(255,255,255,0.6);
+
+display:flex;
+
+align-items:center;
+
+justify-content:center;
+
+cursor:pointer;
+
+}
+
+
+.back-btn span{
+
+font-size:38px;
+
+color:#111;
+
+font-weight:300;
+
+line-height:1;
+
+}
+
+</style>
+
+</head>
+
+
+
+<body>
+
+<button id="backBtn" class="back-btn" onclick="goBack()">
+<span>‹</span>
+</button>
+
+<div class="top-bar">
+
+<h1>لوحة تقييمات كليجاتشينو</h1>
+
+<button id="themeBtn" onclick="toggleTheme()">
+🌙
+</button>
+
+</div>
+
+
+
+
+
+<div id="updateTime">
+آخر تحديث للبيانات
+</div>
+
+
+
+<select id="filter" onchange="loadData()">
+
+<option value="all">كل التقييمات</option>
+
+<option value="today">اليوم</option>
+
+<option value="yesterday">الأمس</option>
+
+<option value="week">آخر 7 أيام</option>
+
+<option value="month">هذا الشهر</option>
+
+<option value="year">هذه السنة</option>
+
+<option value="lastYear">السنة الماضية</option>
+
+</select>
+
+
+
+<div class="card">
+
+<h2>عدد الراضين</h2>
+
+<div id="yes" class="number green">
+0
+</div>
+
+</div>
+
+
+
+
+<div class="card">
+
+<h2>عدد غير الراضين</h2>
+
+<div id="no" class="number red">
+0
+</div>
+
+</div>
+
+
+
+
+<div class="card">
+
+<h2>إجمالي التقييمات</h2>
+
+<div id="total" class="number">
+0
+</div>
+
+</div>
+
+
+
+
+<div class="card">
+
+<h2>نسبة الرضا</h2>
+
+<div id="rate" class="number green">
+0%
+</div>
+
+</div>
+
+
+
+
+<div class="card">
+
+<h2>أكثر جهاز استخداماً</h2>
+
+<div id="device" class="number">
+-
+</div>
+
+</div>
+
+
+
+
+<div class="chartBox">
+
+<h2>نسبة التقييمات</h2>
+
+
+<canvas id="ratingChart"></canvas>
+
+
+<div class="percentBox">
+
+
+<div class="item">
+
+<div class="line" style="background:green"></div>
+
+<span id="yesPercent">
+راضين 0%
+</span>
+
+</div>
+
+
+
+<div class="item">
+
+<div class="line" style="background:red"></div>
+
+<span id="noPercent">
+غير راضين 0%
+</span>
+
+</div>
+
+
+</div>
+
+
+</div>
+<script>
+
+
+var chart;
+
+
+
+function loadData(){
+
+
+var filter =
+document.getElementById("filter").value;
+
+
+
+google.script.run
+.withSuccessHandler(function(data){
+
+
+
+document.getElementById("yes").innerHTML =
+data.yes;
+
+
+document.getElementById("no").innerHTML =
+data.no;
+
+
+document.getElementById("total").innerHTML =
+data.total;
+
+
+
+var yes = Number(data.yes);
+
+var no = Number(data.no);
+
+var total = yes + no;
+
+
+
+var yesPercent = 0;
+
+var noPercent = 0;
+
+
+
+if(total > 0){
+
+yesPercent = Math.round((yes / total) * 100);
+
+noPercent = Math.round((no / total) * 100);
+
+}
+
+
+
+document.getElementById("rate").innerHTML =
+yesPercent + "%";
+
+
+
+document.getElementById("yesPercent").innerHTML =
+"راضين " + yesPercent + "%";
+
+
+
+document.getElementById("noPercent").innerHTML =
+"غير راضين " + noPercent + "%";
+
+
+
+document.getElementById("device").innerHTML =
+data.mostDevice;
+
+
+
+document.getElementById("updateTime").innerHTML =
+"آخر تحديث للبيانات : " + data.updateTime;
+
+
+
+
+
+if(chart){
+
+chart.destroy();
+
+}
+
+
+
+
+chart = new Chart(
+document.getElementById("ratingChart"),
+{
+
+
+type:"doughnut",
+
+
+
+data:{
+
+
+labels:[
+
+"راضين",
+"غير راضين"
+
+],
+
+
+
+datasets:[{
+
+data:[
+
+yes,
+no
+
+],
+
+
+backgroundColor:[
+
+"green",
+"red"
+
+],
+
+
+borderWidth:0
+
+
+}]
+
+},
+
+
+
+options:{
+
+
+responsive:true,
+
+
+plugins:{
+
+
+legend:{
+
+
+display:false
+
+}
+
+
+}
+
+
+}
+
+
+
+});
+
+
+
+
+})
+.getStats(filter);
+
+
+
+}
+
+
+
+loadData();
+
+
+
+</script>
+
+<script>
+
+function loadTheme(){
+
+let theme = localStorage.getItem("ratingTheme");
+
+
+if(theme=="dark"){
+
+document.body.classList.add("dark");
+
+}
+
+changeIcon();
+
+}
+
+
+
+function toggleTheme(){
+
+document.body.classList.toggle("dark");
+
+
+if(document.body.classList.contains("dark")){
+
+localStorage.setItem("ratingTheme","dark");
+
+}
+
+else{
+
+localStorage.setItem("ratingTheme","light");
+
+}
+
+
+changeIcon();
+
+}
+
+
+
+function changeIcon(){
+
+let btn=document.getElementById("themeBtn");
+
+if(!btn) return;
+
+
+if(document.body.classList.contains("dark")){
+
+btn.innerHTML="☀️";
+
+}
+
+else{
+
+btn.innerHTML="🌙";
+
+}
+
+}
+
+
+document.addEventListener("DOMContentLoaded",function(){
+
+loadTheme();
+
+});
+
+let role = localStorage.getItem("role");
+
+if(role=="مدير النظام"){
+
+document.getElementById("backBtn").style.visibility="visible";
+
+}
+
+
+
+
+function goBack(){
+
+window.location.href="https://maqshoush.github.io/customer-feedback-kelijachino-alnakhil/dashboard.html";
+
+}
+
+
+
+
+
+
+</script>
+</body>
+
+</html>
