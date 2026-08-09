@@ -411,9 +411,21 @@ var filter =
 document.getElementById("filter").value;
 
 
+fetch("https://script.google.com/macros/s/AKfycbxbnrzn9Wr9bw7Wwx_1orSMU-r_he6PkfR0sne79blA63DDHirYcMSdgznHc6c-av0vqw/exec",
+{
+method:"POST",
 
-google.script.run
-.withSuccessHandler(function(data){
+body:JSON.stringify({
+
+action:"stats",
+
+filter:filter
+
+})
+
+})
+.then(r=>r.json())
+.then(function(data){
 
 
 
@@ -568,7 +580,12 @@ display:false
 
 
 })
-.getStats(filter);
+.catch(error=>{
+console.log(error);
+});
+
+}
+
 
 
 
