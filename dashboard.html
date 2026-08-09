@@ -148,22 +148,53 @@ color:#222;
 .logout{
 
 display:block;
-
 margin:40px auto;
 
-width:200px;
-
-padding:15px;
+width:260px;
+height:60px;
 
 border:none;
 
-border-radius:10px;
+border-radius:18px;
 
-background:#222;
+background:linear-gradient(
+135deg,
+#ff3030,
+#e60000,
+#7b2cff
+);
+
+background-size:200% 200%;
+
+animation:logoutMove 5s infinite;
 
 color:white;
 
+font-size:20px;
+
+font-weight:bold;
+
 cursor:pointer;
+
+box-shadow:
+0 5px 15px rgba(255,0,0,.25);
+
+}
+
+
+@keyframes logoutMove{
+
+0%{
+background-position:0% 50%;
+}
+
+50%{
+background-position:100% 50%;
+}
+
+100%{
+background-position:0% 50%;
+}
 
 }
 
