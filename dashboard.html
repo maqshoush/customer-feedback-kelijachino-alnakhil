@@ -487,6 +487,185 @@ color:#111;
 body.dark .brand-text{
 color:white;
 }
+ /* ضبط شعار الدعم الفني للشاشات الكبيرة */
+
+.support-logo,
+.support-image,
+.footer-logo,
+img.support{
+
+max-width:260px;
+width:40%;
+height:auto;
+object-fit:contain;
+
+}
+
+
+/* النص الموجود تحت الشعار */
+
+.support-text{
+
+text-align:center;
+max-width:400px;
+margin:auto;
+font-size:16px;
+
+}
+
+
+/* للآيباد والتابلت */
+
+@media (min-width:700px) and (max-width:1200px){
+
+.support-logo,
+.support-image,
+.footer-logo,
+img.support{
+
+max-width:220px;
+
+}
+
+
+.support-text{
+
+font-size:15px;
+
+}
+
+}
+
+
+/* للابتوبات والشاشات الكبيرة */
+
+@media (min-width:1200px){
+
+.support-logo,
+.support-image,
+.footer-logo,
+img.support{
+
+max-width:280px;
+
+}
+
+}
+
+
+/* إصلاح رقم الدعم بالوضع الليلي */
+
+body.dark .support-text,
+body.dark .support-text span{
+
+color:white !important;
+
+}
+
+
+/* منع انتقال النص لليسار */
+
+.support-text{
+
+direction:rtl;
+text-align:center;
+
+}
+
+/* زر الدعم الفني */
+
+.support{
+
+display:flex;
+align-items:center;
+justify-content:center;
+gap:8px;
+
+direction:rtl;
+
+margin:20px auto 0;
+
+width:240px;
+height:45px;
+
+border-radius:25px;
+
+color:white;
+text-decoration:none;
+
+font-size:15px;
+font-weight:bold;
+
+background:linear-gradient(
+90deg,
+#1597ff,
+#6c35ff,
+#d946ef
+);
+
+box-shadow:0 5px 15px rgba(80,120,255,.3);
+
+}
+
+
+/* رمز الدعم */
+
+.support img{
+
+width:38px;
+height:38px;
+
+object-fit:contain;
+
+}
+
+
+/* النص */
+
+.support span{
+
+white-space:nowrap;
+
+}
+
+
+/* الآيباد واللابتوب */
+
+@media (min-width:700px){
+
+.support{
+
+width:250px;
+
+}
+
+.support img{
+
+width:40px;
+height:40px;
+
+}
+
+}
+
+
+/* الوضع الليلي */
+
+body.dark .support span{
+
+color:white;
+
+}
+
+body.dark .support{
+
+direction:rtl;
+
+}
+body.dark .support{
+
+direction:rtl;
+}
 </style>
 
 </head>
