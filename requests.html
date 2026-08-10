@@ -2,7 +2,7 @@
 <html lang="ar" dir="rtl">
 
 <head>
-
+<link rel="stylesheet" href="loader.css">
 <script src="auth.js"></script>
 
 <meta charset="UTF-8">
@@ -60,7 +60,16 @@ transparent
 animation:loading 1.3s infinite;
 
 }
+body.dark .skeleton-card::before{
 
+background:linear-gradient(
+90deg,
+transparent,
+rgba(255,255,255,.15),
+transparent
+);
+
+}
 
 
 .skeleton-line{
@@ -599,6 +608,8 @@ row:row
 
 function goBack(){
 
+showLoader();
+
 window.location.href="dashboard.html";
 
 }
@@ -607,6 +618,13 @@ window.location.href="dashboard.html";
 
 
 <script src="theme.js"></script>
+ <div id="loader">
+
+<img src="RIDEX_icon_clean.svg">
+
+</div>
+
+<script src="loader.js"></script>
 </body>
 
 </html>
