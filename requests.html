@@ -505,7 +505,7 @@ ${r.status}
 <div class="actions">
 
 
-<button class="accept" onclick="approve(${r.row})">
+<button class="accept" onclick="approve('${r.username}')">
 
 ✅ قبول
 
@@ -513,7 +513,7 @@ ${r.status}
 
 
 
-<button class="reject" onclick="reject(${r.row})">
+<button class="reject" onclick="reject('${r.username}')">
 
 ❌ رفض
 
@@ -546,7 +546,7 @@ document.getElementById("list").innerHTML=html;
 
 
 
-function approve(row){
+function approve(username){
 
 
 if(confirm("هل أنت متأكد من قبول الطلب؟")){
@@ -560,7 +560,7 @@ body:JSON.stringify({
 
 action:"approve",
 
-row:row
+username:username
 
 })
 
@@ -578,7 +578,7 @@ row:row
 
 
 
-function reject(row){
+function reject(username){
 
 
 if(confirm("هل أنت متأكد من رفض الطلب؟")){
@@ -592,7 +592,7 @@ body:JSON.stringify({
 
 action:"reject",
 
-row:row
+username:username
 
 })
 
